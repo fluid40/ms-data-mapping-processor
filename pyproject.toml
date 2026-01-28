@@ -1,0 +1,24 @@
+[project]
+name = "ms-data-mapping-processor"
+version = "0.0.1"
+description = "Microservice 'data mapping processor' for retrieving dynamic data from the asset connector and providing this data as a standard AAS structure."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Daniel Klein", email = "daniel.klein@em.ag" }]
+requires-python = ">=3.11"
+keywords = ["AAS", "Fluid", "python", "runtime"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/fluid40/ms-data-mapping-processor"
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+
+[tool.commitizen.branch]
+allowed = "^(main|master|develop|feature/.*|fix/.*|hotfix/.*)$"

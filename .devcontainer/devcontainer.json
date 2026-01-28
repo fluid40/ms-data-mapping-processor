@@ -1,0 +1,33 @@
+{
+    "name": "Fluid4.0 Runtime",
+    "dockerComposeFile": "./docker-compose.yaml",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "forwardPorts": [
+        1433
+    ],
+    "service": "runtime_dev_container",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "charliermarsh.ruff",
+                "streetsidesoftware.code-spell-checker",
+                "mhutchie.git-graph",
+                "oderwat.indent-rainbow",
+                "medo64.render-crlf",
+                "eamodio.gitlens",
+                "njpwerner.autodocstring",
+                "aaron-bond.better-comments",
+                "vivaxy.vscode-conventional-commits",
+                "tamasfe.even-better-toml",
+                "GitHub.vscode-github-actions",
+                "bierner.github-markdown-preview",
+                "dbaeumer.vscode-eslint",
+                "ms-python.debugpy",
+                "yzhang.markdown-all-in-one",
+                "vscjava.migrate-java-to-azure"
+            ]
+        }
+    },
+    "postCreateCommand": "pip install --no-cache-dir -r requirements.txt"
+}
