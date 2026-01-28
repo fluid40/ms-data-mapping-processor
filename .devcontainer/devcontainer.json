@@ -1,11 +1,11 @@
 {
-    "name": "Fluid4.0 Runtime",
+    "name": "Fluid4.0 Microservice DMP Development Container",
     "dockerComposeFile": "./docker-compose.yaml",
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
     "forwardPorts": [
         1433
     ],
-    "service": "runtime_dev_container",
+    "service": "dev_container",
     "customizations": {
         "vscode": {
             "extensions": [

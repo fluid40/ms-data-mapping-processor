@@ -1,25 +1,19 @@
 services:
   opcua_press_mockup:
     image: engineeringmethodsag/fluid-opcua-press-mockup:latest
-    container_name: opcua_press_mockup-rt
-    ports:
-      - "4840:4840"
+    container_name: opcua-press-mockup
 
   asset_connector:
     image: engineeringmethodsag/fluid-asset-connector-python:latest
-    container_name: asset_connector-rt
-    ports:
-      - '8078:8000'
+    container_name: ms-asset-connector
     depends_on:
         - opcua_press_mockup
 
   influx_database_v1:
     image: influxdb:1.11.8
-    container_name: influx_database_v1-rt
-    ports:
-      - "8030:8086"
+    container_name: influx-database
     volumes:
-      - influxdb_v1_data:/var/lib/influxdb
+      - influxdb_data:/var/lib/influxdb
     restart: always
     environment:
       INFLUXDB_DB: submodel-db
@@ -34,31 +28,9 @@ services:
       retries: 5
       start_period: 10s
 
-  influx_database_v2:
-    image: influxdb:2.7
-    container_name: influx_database_v2-rt
-    ports:
-      - "8031:8086"
-    volumes:
-      - influxdb_v2_data:/var/lib/influxdb2
-    restart: always
-    environment:
-      DOCKER_INFLUXDB_INIT_MODE: setup
-      DOCKER_INFLUXDB_INIT_USERNAME: admin
-      DOCKER_INFLUXDB_INIT_PASSWORD: fluid40secure!
-      DOCKER_INFLUXDB_INIT_ORG: fluid40-org
-      DOCKER_INFLUXDB_INIT_BUCKET: fluid40-bucket
-      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: wbEx!S!#4OHcN!5X
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 10s
-
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana-rt
+    container_name: grafana
     ports:
       - "8076:3000"
     environment:
@@ -73,7 +45,7 @@ services:
 
   java_aas_server:
     image: eclipsebasyx/aas-environment:2.0.0-milestone-08
-    container_name: javaserver-rt
+    container_name: aas-server
     ports:
       - '8077:8077'
     environment:
@@ -85,9 +57,9 @@ services:
 
   aas-web-ui:
     image: eclipsebasyx/aas-gui:SNAPSHOT
-    container_name: aas_ui-rt
+    container_name: aas-web-ui
     ports:
-      - '8065:3000'
+      - '8078:3000'
     environment:
       AAS_REGISTRY_PATH:
       SUBMODEL_REGISTRY_PATH:
@@ -104,33 +76,9 @@ services:
       java_aas_server :
         condition: service_healthy
 
-  mnestix-aas-browser:
-    image: mnestix/mnestix-browser:latest
-    container_name: mnestix-aas-browser-rt
-    environment:
-      SECRET_ENC_KEY: "rFjKQKzK2ZmlCK6AqY6Cznv9zqL+6P8bEUXMZPRkZHY="
-      NEXTAUTH_URL: https://localhost:8070
-      NEXTAUTH_SECRET: "6YoKn84YGOzdVXuj6rwOiv9SV"
-      REGISTRY_API_URL:
-      SUBMODEL_REGISTRY_API_URL:
-      AAS_REPO_API_URL: http://host.docker.internal:8077
-      SUBMODEL_REPO_API_URL: http://host.docker.internal:8077
-      CONCEPT_DESCRIPTION_REPO_API_URL: http://host.docker.internal:8077
-      AAS_LIST_FEATURE_FLAG: 'true'
-      THEME_PRIMARY_COLOR: "#00A0C7"
-      THEME_SECONDARY_COLOR: "#3D3D3D"
-      THEME_LOGO_MIME_TYPE: "image/png"
-    restart: always
-    ports:
-      - '8070:3000'
-    volumes:
-      - ./logo/fluid40_white.png:/app/public/logo
-    depends_on:
-      - java_aas_server
-
-  runtime_dev_container:
+  dev_container:
     build: .
-    container_name: runtime-dev
+    container_name: ms-dev-container
     volumes:
       - ../..:/workspaces:cached
     command: sleep infinity
@@ -144,11 +92,9 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
-      - RUNTIME_INFLUX_PW=wbEx!S!#4OHcN!5X
       - RUNTIME_OAUTH_SECRET=nY0mjyECF60DGzNmQUjL81XurSl8etom
       - RUNTIME_CONFIGURATION_FILE=./configuration/DevContainerEnv.json
 
 volumes:
-  influxdb_v1_data:
-  influxdb_v2_data:
+  influxdb_data:
   grafana_data:

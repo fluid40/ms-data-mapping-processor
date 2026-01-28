@@ -8,7 +8,7 @@
             "name": "Microservice",
             "type": "debugpy",
             "request": "launch",
-            "module": "runtime",
+            "module": "ms_data_mapping_processor",
             "justMyCode": false
         }
     ]

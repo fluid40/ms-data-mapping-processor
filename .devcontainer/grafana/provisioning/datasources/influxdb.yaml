@@ -4,7 +4,7 @@ datasources:
   - name: RuntimeInfluxDBv1
     type: influxdb
     access: proxy
-    url: http://influx_database_v1-rt:8086
+    url: http://influx-database:8086
     database: submodel-db
     user: fluid40
     jsonData:
@@ -19,15 +19,3 @@ datasources:
     editable: false
     version: 1
 
-  - name: RuntimeInfluxDBv2
-    uid: influxdb-v2
-    type: influxdb
-    access: proxy
-    url: http://influx_database_v2-rt:8086
-    jsonData:
-      version: Flux
-      organization: fluid40-org
-      defaultBucket: fluid40-bucket
-      tlsSkipVerify: false
-    secureJsonData:
-      token: wbEx!S!#4OHcN!5X
