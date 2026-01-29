@@ -1,5 +1,5 @@
 # source dirs
-src = ["aas_http_client"]
+src = ["ms_data_mapping_processor"]
 
 # set cache dir to our project's cache dir
 cache-dir = "~/.cache/ruff"
@@ -128,4 +128,4 @@ convention = "pep257"
 max-args = 9
 
 [lint.isort]
-known-first-party = ["runtime"]
+known-first-party = ["ms_data_mapping_processor"]

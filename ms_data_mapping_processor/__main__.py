@@ -3,12 +3,13 @@ import os
 from contextlib import asynccontextmanager
 
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_health import health
 
+from ms_data_mapping_processor.core.service_setup import setup_service
 from ms_data_mapping_processor.endpoint_routes import default_endpoints
-from ms_data_mapping_processor.models.configuration import load_configuration_file
+from ms_data_mapping_processor.models.configuration_models import load_configuration_file
 from ms_data_mapping_processor.utilities import logging_handler
 
 logger = logging.getLogger(__name__)
@@ -24,6 +25,7 @@ async def lifespan(app: FastAPI):
     app.state.service_states = None
 
     try:
+        # Load configuration
         logger.debug("Get configuration file path from environment variable 'RUNTIME_CONFIGURATION_FILE'.")
         config_file_path = os.getenv("CONFIG_FILE_PATH", "config/DevContainerEnv.json")
         configuration = load_configuration_file(config_file_path)
@@ -32,8 +34,14 @@ async def lifespan(app: FastAPI):
             logger.error("Failed to load runtime configuration. Shutting down the application.")
             raise RuntimeError("Failed to load runtime configuration.")
 
+        # Setup microservice
+        service_states = setup_service(configuration)
+
+        app.state.service_states = service_states
+        logger.info("Microservice HTTP server initialized successfully.")
+
     except Exception as e:
-        logger.error(f"Error during application startup: {e}")
+        logger.error(f"Error during microservice initialization: {e}")
         raise e
 
     yield

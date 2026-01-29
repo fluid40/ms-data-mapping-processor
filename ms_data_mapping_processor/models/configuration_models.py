@@ -1,3 +1,5 @@
+"""Module defining the configuration model classes."""
+
 import logging
 from pathlib import Path
 
