@@ -3,13 +3,14 @@ import os
 from contextlib import asynccontextmanager
 
 import uvicorn
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_health import health
 
 from ms_data_mapping_processor.core.service_setup import setup_service
 from ms_data_mapping_processor.endpoint_routes import default_endpoints
 from ms_data_mapping_processor.models.configuration_models import load_configuration_file
+from ms_data_mapping_processor.models.process_models import ServiceStates
 from ms_data_mapping_processor.utilities import logging_handler
 
 logger = logging.getLogger(__name__)
@@ -35,7 +36,7 @@ async def lifespan(app: FastAPI):
             raise RuntimeError("Failed to load runtime configuration.")
 
         # Setup microservice
-        service_states = setup_service(configuration)
+        service_states: ServiceStates = setup_service(configuration)
 
         app.state.service_states = service_states
         logger.info("Microservice HTTP server initialized successfully.")
