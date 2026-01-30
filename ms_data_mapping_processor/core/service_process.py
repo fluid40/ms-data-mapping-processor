@@ -126,9 +126,10 @@ def _convert_value(value: str, value_type: DataTypeDefXsd) -> any:
             v = value.strip().lower()
             if v == "true":
                 return_value = True
-            if v == "false":
+            elif v == "false":
                 return_value = False
-            raise ValueError(f"Cannot convert '{value}' to boolean.")
+            else:
+                raise ValueError(f"Cannot convert '{value}' to boolean.")
         case model.datatypes.Integer | model.datatypes.Short:
             return_value = int(value)
         case model.datatypes.Double | model.datatypes.Float:
