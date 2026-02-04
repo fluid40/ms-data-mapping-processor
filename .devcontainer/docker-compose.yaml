@@ -102,8 +102,8 @@ services:
     ports:
       - "8078:3000"
     environment:
-      AAS_REGISTRY_PATH:
-      SUBMODEL_REGISTRY_PATH:
+      AAS_REGISTRY_PATH: http://localhost:8076/shell-descriptors
+      SUBMODEL_REGISTRY_PATH: http://localhost:8077/submodel-descriptors
       AAS_REPO_PATH: http://localhost:8075/shells
       SUBMODEL_REPO_PATH: http://localhost:8075/submodels
       CD_REPO_PATH: http://localhost:8075/concept-descriptions
