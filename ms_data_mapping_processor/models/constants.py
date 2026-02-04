@@ -2,6 +2,8 @@
 
 import enum
 
+CONFIG_BASE_PATH = "configuration/"
+
 
 class StatusCode(enum.Enum):
     """Enumeration of status codes for the data mapping processor."""
@@ -15,3 +17,4 @@ class StatusCode(enum.Enum):
     MAPPING_PROCESSOR_ERROR = 305
     ASSET_CONNECTOR_CONNECTION_ERROR = 306
     AID_CONFIGURATION_ERROR = 307
+    CREATE_REPO_CONNECTION_ERROR = 308

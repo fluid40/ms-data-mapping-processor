@@ -4,6 +4,7 @@ import asyncio
 import logging
 import os
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 import uvicorn
 from fastapi import FastAPI
@@ -14,6 +15,7 @@ from ms_data_mapping_processor.core.service_process import get_asset_values
 from ms_data_mapping_processor.core.service_setup import setup_service
 from ms_data_mapping_processor.endpoint_routes import default_endpoints
 from ms_data_mapping_processor.models.configuration_models import load_configuration_file
+from ms_data_mapping_processor.models.constants import CONFIG_BASE_PATH
 from ms_data_mapping_processor.models.process_models import ServiceStates
 from ms_data_mapping_processor.utilities import logging_handler
 
@@ -54,8 +56,10 @@ async def lifespan(app: FastAPI):
 
     try:
         # Load configuration
-        logger.debug("Get configuration file path from environment variable 'RUNTIME_CONFIGURATION_FILE'.")
-        config_file_path = os.getenv("CONFIG_FILE_PATH", "config/DevContainerEnv.json")
+        logger.debug("Get configuration file name from environment variable 'CONFIG_FILE_NAME'.")
+        config_file_name = os.getenv("CONFIG_FILE_NAME", "service_config.json")
+        config_file_path = Path(CONFIG_BASE_PATH) / config_file_name
+
         configuration = load_configuration_file(config_file_path)
 
         if configuration is None:

@@ -1,7 +1,7 @@
 import logging
 
 from aas_http_client import SdkWrapper, sdk_tools
-from aas_standard_parser import submodel_json_parser
+from aas_standard_parser import submodel_json_helper
 from basyx.aas import model
 
 logger = logging.getLogger(__name__)
@@ -69,7 +69,7 @@ def get_aimc_submodel(wrapper: SdkWrapper, aas: model.AssetAdministrationShell) 
     return submodels[0]
 
 
-def get_submodels_by_semantic_id(wrapper: SdkWrapper, aas: model.AssetAdministrationShell, semantic_id: str) -> list[model.Submodel]:
+def get_submodel_ids_by_semantic_id(wrapper: SdkWrapper, aas: model.AssetAdministrationShell, semantic_id: str) -> list[model.Submodel]:
     """Get submodels from the AAS by semantic ID.
 
     :param wrapper: The SDK wrapper for the AAS server
@@ -95,7 +95,7 @@ def get_submodels_by_semantic_id(wrapper: SdkWrapper, aas: model.AssetAdministra
             continue
 
         # extract the semantic ID from the submodel data
-        sm_semantic_id = submodel_json_parser.get_value_from_semantic_id_by_index(sm_data)
+        sm_semantic_id = submodel_json_helper.get_value_from_semantic_id_by_index(sm_data)
 
         # check if the semantic ID matches. If not, continue to the next submodel
         if not sm_semantic_id or semantic_id not in sm_semantic_id:

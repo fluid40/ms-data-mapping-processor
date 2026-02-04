@@ -36,18 +36,17 @@ class ServiceConfiguration(BaseModel):
     polling_interval: int = Field(
         default=5, alias="PollingInterval", description="Polling interval in seconds for retrieving values from the broker."
     )
-    aas_server_configurations: list[AasServerConfiguration] = Field(default=[], alias="AasServer", description="Configuration for the AAS server.")
-    aas_registry_configuration: dict = Field(..., alias="AasRegistry", description="Configuration for the AAS registry.")
-    asset_connector_configuration: dict = Field(..., alias="AssetConnector", description="Configuration for the asset connector.")
 
 
-def load_configuration_file(config_file_path: str) -> ServiceConfiguration | None:
-    """Load the runtime configuration from a JSON file."""
-    if not config_file_path:
+def load_configuration_file(config_file: Path) -> ServiceConfiguration | None:
+    """Load the runtime configuration from a JSON file.
+
+    :param config_file_path: Path to the configuration file
+    :return: ServiceConfiguration object if successful, None otherwise
+    """
+    if config_file is None:
         logger.error("No configuration file provided.")
         return None
-
-    config_file = Path(config_file_path)
 
     config_file = config_file.resolve()
     logger.info(f"Load configuration file '{config_file}'.")
