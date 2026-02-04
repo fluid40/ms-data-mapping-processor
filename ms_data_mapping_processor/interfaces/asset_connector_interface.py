@@ -71,7 +71,7 @@ class AssetConnectorClient(BaseModel):
             logger.error(f"Failed to set config: {e}")
             return None
 
-    def get_value(self, configuration: dict) -> AssetConnectorResponseBody:
+    def get_value(self, configuration: dict) -> AssetConnectorResponseBody | None:
         """Returns MQTT data from a given configuration.
 
         :param configuration: The configuration dictionary to use for the request.
@@ -99,7 +99,7 @@ class AssetConnectorClient(BaseModel):
             logger.error(f"Failed to get value: {e}")
             return None
 
-    def get_root(self) -> dict:
+    def get_root(self) -> dict | None:
         """Returns the root information from the Asset Connector.
 
         :return: The root information or an error message.

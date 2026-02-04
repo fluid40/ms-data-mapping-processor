@@ -50,7 +50,7 @@ def get_asset_values(states: ServiceStates):
             )
 
             # Update target property in submodel with received payload value
-            _update_target_property_with_payload(payload_value, states.aas_server_wrapper, states.dynamic_submodel_cache)
+            _update_target_property_with_payload(payload_value, states.aas_server_wrapper_list, states.dynamic_submodel_cache)
 
             asset_values.append(payload_value)
 

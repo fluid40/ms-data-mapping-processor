@@ -48,7 +48,11 @@
                 // Markdown linting and style checking
                 "DavidAnson.vscode-markdownlint",
                 // unicode emoji selector for vscode (F1-> type 'emoji')
-                "perkovec.emoji"
+                "perkovec.emoji",
+                // GitHub Actions syntax highlighting, snippets, and validation
+                "GitHub.vscode-github-actions",
+                // ESLint support
+                "dbaeumer.vscode-eslint"
             ]
         }
     },

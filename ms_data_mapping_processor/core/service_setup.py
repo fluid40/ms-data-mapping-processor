@@ -6,7 +6,7 @@ import os
 
 import basyx
 import basyx.aas.adapter.json
-from aas_http_client import SdkWrapper, create_wrapper_by_dict
+from aas_http_client import AasHttpClient, SdkWrapper, create_wrapper_by_dict
 from aas_standard_parser import aimc_parser
 from aas_standard_parser.classes.aimc_parser_classes import MappingConfigurations
 from basyx.aas import model
@@ -31,84 +31,123 @@ def setup_service(configuration: ServiceConfiguration) -> ServiceStates:
         logger.error("No configuration provided for service setup.")
         raise HTTPException(status_code=StatusCode.CONFIGURATION_ERROR.value, detail="No configuration provided for service setup.")
 
-    # connect to AAS server
-    aas_server_wrapper: SdkWrapper = _connect_to_aas_server(configuration)
+    # connect to AAS registry
+    aas_registry_client: AasHttpClient = _create_aas_registry_client(configuration)
+
+    # connect to all AAS server
+    aas_server_wrapper_list: dict[str, SdkWrapper] = _create_aas_server_wrapper(configuration)
 
     # get the AAS from server
-    shell: model.AssetAdministrationShell = _get_shell(aas_server_wrapper, configuration)
+    shell: model.AssetAdministrationShell = _get_shell(aas_registry_client, aas_server_wrapper_list, configuration.aas_id)
 
     # get the AIMC submodel from server
-    aimc_submodel: model.Submodel = _get_aimc_submodel(aas_server_wrapper, shell)
+    aimc_submodel: model.Submodel = _get_aimc_submodel(aas_server_wrapper_list, shell)
 
     # parse the AIMC submodel to get mapping configurations
     mapping_configurations: MappingConfigurations = _get_mapping_configurations(aimc_submodel)
 
     # get the AID submodels from the AAS
-    aid_submodels: list[model.Submodel] = _get_aid_submodels(aas_server_wrapper, mapping_configurations.aid_submodel_ids)
+    aid_submodels: list[model.Submodel] = _get_aid_submodels(aas_server_wrapper_list, mapping_configurations.aid_submodel_ids)
 
     # connect to Asset Connector
-    asset_connector_client: AssetConnectorClient = _connect_to_asset_connector(configuration)
+    asset_connector_client = _connect_to_asset_connector(configuration)
 
     # configure Asset Connector with AID submodels
     _configure_asset_connector(asset_connector_client, aid_submodels)
 
     # create process data
-    process_data = ProcessData(id=shell.id, id_short=shell.id_short, display_name=shell.display_name)
+    process_data = ProcessData(id=shell.id, id_short=shell.id_short, display_name=str(shell.display_name))
 
     # create service states
     service_states = ServiceStates(process_data)
     service_states.service_configuration = configuration
-    service_states.aas_server_wrapper = aas_server_wrapper
+    service_states.aas_registry_client = aas_registry_client
+    service_states.aas_server_wrapper_list = aas_server_wrapper_list
     service_states.asset_connector_client = asset_connector_client
     service_states.mapping_configurations = mapping_configurations
 
     return service_states
 
 
-def _connect_to_aas_server(configuration: ServiceConfiguration) -> SdkWrapper | None:
+def _create_aas_registry_client(configuration: ServiceConfiguration) -> AasHttpClient:
+    """Create AAS registry client using the provided configuration.
+
+    :param configuration: The service configuration
+    :raises HTTPException: If the connection to the AAS registry could not be established
+    :return: The AAS registry client
+    """
+    logger.info("Create AAS registry wrapper.")
+    registry_wrapper = _connect_to_aas_server(configuration.aas_registry_configuration, "AAS_REGISTRY_SECRET")
+
+    if registry_wrapper is None:
+        logger.error("Failed to create AAS registry client.")
+        raise HTTPException(
+            status_code=StatusCode.AAS_REGISTRY_CONNECTION_ERROR.value, detail="Could not connect to AAS Registry. Client not created."
+        )
+
+    return registry_wrapper.get_client()
+
+
+def _create_aas_server_wrapper(configuration: ServiceConfiguration) -> dict[str, SdkWrapper]:
+    """Create AAS server wrappers for all configured AAS servers.
+
+    :param configuration: The service configuration
+    :return: A dictionary of AAS server wrappers keyed by their base URL
+    """
+    logger.info(f"Create AAS server wrappers for {len(configuration.aas_server_configurations)} configured AAS servers.")
+    aas_wrapper: dict[str, SdkWrapper] = {}
+
+    for aas_server_configuration in configuration.aas_server_configurations:
+        wrapper = _connect_to_aas_server(aas_server_configuration.server_configuration, aas_server_configuration.secret_var_name)
+
+        if wrapper is not None and wrapper.base_url not in aas_wrapper:
+            logger.info(f"AAS server wrapper for base URL '{wrapper.base_url}' created.")
+            aas_wrapper[wrapper.base_url] = wrapper
+
+    return aas_wrapper
+
+
+def _connect_to_aas_server(server_configuration: dict, secret_var_name: str) -> SdkWrapper | None:
     """Connect to the AAS server and create a server wrapper by a given configuration file.
 
-    :param config_file: Path to the configuration file
-    :raises HTTPException: If the server wrapper could not be created
+    :param server_configuration: The AAS server configuration
+    :param secret_var_name: The name of the environment variable that contains the AAS authentication secret.
     :return: The created server wrapper or None
     """
     logger.info("Connect to AAS server.")
 
-    logger.info("Get AAS server password from environment variable 'RUNTIME_AAS_PW'.")
-    password: str = os.getenv("RUNTIME_BASIC_AUTH_PW", "")
-    o_auth_secret: str = os.getenv("RUNTIME_OAUTH_SECRET", "")
-    token: str = os.getenv("RUNTIME_BEARER_TOKEN", "")
+    logger.info(f"Get AAS server sec from environment variable '{secret_var_name}'.")
+    server_secret: str = os.getenv(secret_var_name, "")
 
     try:
-        wrapper: SdkWrapper | None = create_wrapper_by_dict(configuration.aas_server_configuration, password, o_auth_secret, token)
+        wrapper: SdkWrapper | None = create_wrapper_by_dict(server_configuration, server_secret, server_secret, server_secret)
     except Exception as ve:
         logger.error(f"Could not create AAS server wrapper: {ve}")
-        raise HTTPException(status_code=StatusCode.AAS_CONNECTION_ERROR.value, detail="Could not connect to AAS server. Client not created.") from ve
+        return None
 
     if wrapper is None:
         logger.error("Could not connect to AAS server. Client not created.")
-        raise HTTPException(status_code=StatusCode.AAS_CONNECTION_ERROR.value, detail="Could not connect to AAS server. Client not created.")
+        return None
 
     return wrapper
 
 
-def _get_shell(aas_server_wrapper: SdkWrapper, configuration: ServiceConfiguration) -> model.AssetAdministrationShell:
+def _get_shell(aas_registry_client: AasHttpClient, aas_server_wrapper_list: dict[str, SdkWrapper], shell_id: str) -> model.AssetAdministrationShell:
     """Get the AAS from the AAS server using Asset Administration Shell ID from configuration file.
 
-    :param aas_server_wrapper: The SDK wrapper for the AAS server
     :raises HTTPException: If the AAS could not be found
     :return: The AAS
     """
-    if configuration.aas_id is None:
+    if shell_id is None:
         logger.error("No Asset Administration Shell ID provided in configuration file.")
         raise HTTPException(
             status_code=StatusCode.CONFIGURATION_ERROR.value, detail="No Asset Administration Shell ID provided in configuration file."
         )
 
-    shell_id: str = configuration.aas_id
-
     logger.info(f"Get Asset Administration Shell with ID '{shell_id}' from server.")
-    shell: model.AssetAdministrationShell = aas_server_wrapper.get_asset_administration_shell_by_id(shell_id)
+    shell_desriptor: dict = AasHttpClient.shell_registry.get_submodel_descriptor_by_id_through_superpath(shell_id)
+
+    shell = None
 
     if shell is None:
         logger.error(f"Asset Administration Shell with ID '{shell_id}' not found on server.")
@@ -180,7 +219,7 @@ def _get_aid_submodels(aas_server_wrapper: SdkWrapper, aid_submodel_ids: list[st
     return submodels
 
 
-def _connect_to_asset_connector(configuration: ServiceConfiguration) -> AssetConnectorClient | None:
+def _connect_to_asset_connector(configuration: ServiceConfiguration) -> AssetConnectorClient:
     """Connect to the Asset Connector using the provided configuration.
 
     :param configuration: The service configuration
@@ -190,7 +229,7 @@ def _connect_to_asset_connector(configuration: ServiceConfiguration) -> AssetCon
     logger.info("Connect to Asset connector.")
 
     try:
-        client: AssetConnectorClient = create_client(configuration.asset_connector_configuration)
+        client = create_client(configuration.asset_connector_configuration)
     except Exception as ve:
         logger.error(f"Could not create Asset Connector client: {ve}")
         raise HTTPException(

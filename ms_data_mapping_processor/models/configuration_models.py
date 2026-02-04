@@ -8,6 +8,24 @@ from pydantic import BaseModel, Field, ValidationError
 logger = logging.getLogger(__name__)
 
 
+class AasServerConfiguration(BaseModel):
+    """Represents the AAS server configuration.
+
+    :param BaseModel: Base model class for Pydantic
+    """
+
+    secret_var_name: str = Field(
+        default="",
+        alias="SecretVarName",
+        description="The name of the environment variable that contains the AAS authentication secret.",
+    )
+    server_configuration: dict = Field(
+        default={},
+        alias="ServerConfiguration",
+        description="The configuration parameters for connecting to the AAS server.",
+    )
+
+
 class ServiceConfiguration(BaseModel):
     """Represents the runtime configuration for the application.
 
@@ -18,11 +36,12 @@ class ServiceConfiguration(BaseModel):
     polling_interval: int = Field(
         default=5, alias="PollingInterval", description="Polling interval in seconds for retrieving values from the broker."
     )
-    aas_server_configuration: dict = Field(..., alias="AasServer", description="Configuration for the AAS server.")
+    aas_server_configurations: list[AasServerConfiguration] = Field(default=[], alias="AasServer", description="Configuration for the AAS server.")
+    aas_registry_configuration: dict = Field(..., alias="AasRegistry", description="Configuration for the AAS registry.")
     asset_connector_configuration: dict = Field(..., alias="AssetConnector", description="Configuration for the asset connector.")
 
 
-def load_configuration_file(config_file_path: str) -> ServiceConfiguration:
+def load_configuration_file(config_file_path: str) -> ServiceConfiguration | None:
     """Load the runtime configuration from a JSON file."""
     if not config_file_path:
         logger.error("No configuration file provided.")

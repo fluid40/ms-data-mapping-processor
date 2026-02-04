@@ -92,6 +92,9 @@ async def lifespan(app: FastAPI):
         logger.exception(f"Shutdown failed: {e}")
         raise e
 
+    finally:
+        logger.info("Shutdown microservice complete.")
+
     yield
     # Perform any necessary cleanup here
 

@@ -2,79 +2,109 @@ services:
   opcua_press_mockup:
     image: engineeringmethodsag/fluid-opcua-press-mockup:latest
     container_name: opcua-press-mockup
+    networks:
+      - bridge
 
   asset_connector:
     image: engineeringmethodsag/fluid-asset-connector-python:latest
     container_name: ms-asset-connector
     depends_on:
-        - opcua_press_mockup
-
-  influx_database_v1:
-    image: influxdb:1.11.8
-    container_name: influx-database
-    volumes:
-      - influxdb_data:/var/lib/influxdb
-    restart: always
-    environment:
-      INFLUXDB_DB: submodel-db
-      INFLUXDB_ADMIN_USER: admin
-      INFLUXDB_ADMIN_PASSWORD: fluid40secure!
-      INFLUXDB_USER: fluid40
-      INFLUXDB_USER_PASSWORD: wbEx!S!#4OHcN!5X
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8086/ping"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 10s
-
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    ports:
-      - "8076:3000"
-    environment:
-      GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: fluid40
-    depends_on:
-        influx_database_v1:
-          condition: service_healthy
-    volumes:
-      - grafana_data:/var/lib/grafana
-      - ./grafana/provisioning:/etc/grafana/provisioning
+      - opcua_press_mockup
+    networks:
+      - bridge
 
   java_aas_server:
-    image: eclipsebasyx/aas-environment:2.0.0-milestone-08
+    image: eclipsebasyx/aas-environment:2.0.0-SNAPSHOT
     container_name: aas-server
     ports:
-      - '8077:8077'
+      - '8075:8075'
     environment:
-      - SERVER_PORT=8077
-      - SERVER_HOST=runt
+      - SERVER_PORT=8075
+      - SERVER_HOST=aas-server
     volumes:
       - ./aas:/application/aas
       - ./basyx/aas-env.properties:/application/application.properties
+    depends_on:
+      aas-registry:
+        condition: service_healthy
+      sm-registry:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
+    networks:
+      - bridge
+
+  aas-registry:
+    image: eclipsebasyx/aas-registry-log-mongodb:2.0.0-SNAPSHOT
+    container_name: aas-registry
+    environment:
+      - SERVER_PORT=8080
+    volumes:
+      - ./basyx/aas-registry.yml:/workspace/config/application.yml
+    restart: always
+    depends_on:
+      mongo:
+        condition: service_healthy
+    ports:
+      - "8076:8080"
+    networks:
+      - bridge
+
+  sm-registry:
+    image: eclipsebasyx/submodel-registry-log-mongodb:2.0.0-SNAPSHOT
+    container_name: sm-registry
+    environment:
+      - SERVER_PORT=8080
+    volumes:
+      - ./basyx/sm-registry.yml:/workspace/config/application.yml
+    restart: always
+    depends_on:
+      mongo:
+        condition: service_healthy
+    ports:
+      - "8077:8080"
+    networks:
+      - bridge
 
   aas-web-ui:
     image: eclipsebasyx/aas-gui:SNAPSHOT
     container_name: aas-web-ui
     ports:
-      - '8078:3000'
+      - "8078:3000"
     environment:
-      AAS_REGISTRY_PATH:
-      SUBMODEL_REGISTRY_PATH:
-      AAS_REPO_PATH: http://localhost:8077/shells
-      SUBMODEL_REPO_PATH: http://localhost:8077/submodels
-      CD_REPO_PATH: http://localhost:8077/concept-descriptions
-      PRIMARY_COLOR: '#00A0C7'
+      AAS_REGISTRY_PATH: http://localhost:8076/shell-descriptors
+      SUBMODEL_REGISTRY_PATH: http://localhost:8077/submodel-descriptors
+      AAS_REPO_PATH: http://localhost:8075/shells
+      SUBMODEL_REPO_PATH: http://localhost:8075/submodels
+      CD_REPO_PATH: http://localhost:8075/concept-descriptions
+      PRIMARY_COLOR: "#00A0C7"
       LOGO_LIGHT_PATH: fluid40_light.png
       LOGO_DARK_PATH: fluid40_dark.png
       DASHBOARD_SERVICE_PATH:
     volumes:
       - ./logo:/usr/src/app/dist/Logo
     depends_on:
-      java_aas_server :
+      java_aas_server:
         condition: service_healthy
+    networks:
+      - bridge
+
+  mongo:
+    image: mongo:4.4
+    container_name: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoAdmin
+      MONGO_INITDB_ROOT_PASSWORD: mongoPassword
+    volumes:
+      - mongo_data:/data/db
+    restart: always
+    healthcheck:
+      test: mongo
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - bridge
 
   dev_container:
     build: .
@@ -83,18 +113,23 @@ services:
       - ../..:/workspaces:cached
     command: sleep infinity
     depends_on:
-        java_aas_server:
-          condition: service_healthy
-        asset_connector:
-          condition: service_started
-        influx_database_v1:
-          condition: service_healthy
+      java_aas_server:
+        condition: service_healthy
+      asset_connector:
+        condition: service_started
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
-      - RUNTIME_OAUTH_SECRET=nY0mjyECF60DGzNmQUjL81XurSl8etom
+      - IQSTRUCT_AAS_SERVER_SECRET=nY0mjyECF60DGzNmQUjL81XurSl8etom
+      - HACK_AAS_SERVER_SECRET=fl40-hack4
+      - AAS_REGISTRY_SECRET=fl40-hack4
       - RUNTIME_CONFIGURATION_FILE=./configuration/DevContainerEnv.json
+    networks:
+      - bridge
 
 volumes:
-  influxdb_data:
   grafana_data:
+  mongo_data:
+
+networks:
+  bridge:

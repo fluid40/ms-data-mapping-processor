@@ -29,7 +29,8 @@ class ServiceStates:
     process_data: ProcessData | None
     service_configuration: ServiceConfiguration | None
     asset_connector_client: AssetConnectorClient | None
-    aas_server_wrapper: SdkWrapper | None
+    aas_registry_client: SdkWrapper | None
+    aas_server_wrapper_list: dict[str, SdkWrapper] | None
     dynamic_submodel_cache: dict[str, model.Submodel] | None
     mapping_configurations: MappingConfigurations | None
 
@@ -38,6 +39,6 @@ class ServiceStates:
         self.process_data: ProcessData = process_data
         self.service_configuration: ServiceConfiguration = None
         self.asset_connector_client: AssetConnectorClient = None
-        self.aas_server_wrapper: SdkWrapper = None
+        self.aas_server_wrapper_list: SdkWrapper = None
         self.dynamic_submodel_cache: dict[str, model.Submodel] = {}
         self.mapping_configurations: MappingConfigurations = None
