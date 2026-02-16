@@ -2,20 +2,18 @@
 
 import json
 import logging
-import os
 
 import basyx
 import basyx.aas.adapter.json
-from aas_http_client import AasHttpClient, SdkWrapper, create_wrapper_by_dict
-from aas_standard_parser import aimc_parser, descriptor_json_helper
+from aas_standard_parser import aas_parser, aimc_parser, submodel_parser
 from aas_standard_parser.classes.aimc_parser_classes import MappingConfigurations
 from basyx.aas import model
 from fastapi import HTTPException
 
-from ms_data_mapping_processor.core import aas_parser
+from ms_data_mapping_processor.core.aas_env_processor import get_shell, get_submodel
 from ms_data_mapping_processor.core.server_handler import ServerHandler
 from ms_data_mapping_processor.interfaces.asset_connector_interface import AssetConnectorClient, create_client
-from ms_data_mapping_processor.models.configuration_models import ServiceConfiguration
+from ms_data_mapping_processor.models.configuration_models import ServerConfiguration, ServerConfigurationsHandler, ServiceConfiguration
 from ms_data_mapping_processor.models.constants import StatusCode
 from ms_data_mapping_processor.models.process_models import ProcessData, ServiceStates
 
@@ -32,11 +30,13 @@ def setup_service(configuration: ServiceConfiguration) -> ServiceStates:
         logger.error("No configuration provided for service setup.")
         raise HTTPException(status_code=StatusCode.CONFIGURATION_ERROR.value, detail="No configuration provided for service setup.")
 
+    server_configurations = ServerConfigurationsHandler()
+
     server_handler = ServerHandler()
-    server_handler.connect_to_server()
+    server_handler.connect_to_server(server_configurations)
 
     # get the AAS from server
-    shell: model.AssetAdministrationShell = _get_shell(server_handler, configuration.aas_id)
+    shell: model.AssetAdministrationShell = get_shell(server_handler, configuration.aas_id)
 
     # get the AIMC submodel from server
     aimc_submodel: model.Submodel = _get_aimc_submodel(server_handler, shell)
@@ -48,7 +48,7 @@ def setup_service(configuration: ServiceConfiguration) -> ServiceStates:
     aid_submodels: list[model.Submodel] = _get_aid_submodels(server_handler, mapping_configurations.aid_submodel_ids)
 
     # connect to Asset Connector
-    asset_connector_client = _connect_to_asset_connector(configuration)
+    asset_connector_client = _connect_to_asset_connector(server_configurations.asset_connector_configuration)
 
     # configure Asset Connector with AID submodels
     _configure_asset_connector(asset_connector_client, aid_submodels)
@@ -66,45 +66,6 @@ def setup_service(configuration: ServiceConfiguration) -> ServiceStates:
     return service_states
 
 
-def _get_shell(server_handler: ServerHandler, shell_id: str) -> model.AssetAdministrationShell:
-    """Get the AAS from the AAS server using Asset Administration Shell ID from configuration file.
-
-    :raises HTTPException: If the AAS could not be found
-    :return: The AAS
-    """
-    if shell_id is None:
-        logger.error("No Asset Administration Shell ID provided in configuration file.")
-        raise HTTPException(
-            status_code=StatusCode.CONFIGURATION_ERROR.value, detail="No Asset Administration Shell ID provided in configuration file."
-        )
-
-    logger.info(f"Get Asset Administration Shell with ID '{shell_id}' from server.")
-    shell_descriptor: dict = server_handler.aas_registry_client.shell_registry.get_asset_administration_shell_descriptor_by_id(shell_id)
-
-    if shell_descriptor is None:
-        logger.error(f"Asset Administration Shell descriptor with ID '{shell_id}' not found in AAS registry.")
-        raise HTTPException(
-            status_code=StatusCode.SHELL_NOT_FOUND.value,
-            detail=f"Asset Administration Shell descriptor with ID '{shell_id}' not found in AAS registry.",
-        )
-
-    shell_href = get_endpoint_href(shell_descriptor, 0)
-    shell_href_data = descriptor_json_helper.parse_endpoint_href(shell_href)
-
-    shell_repo_wrapper = server_handler.get_or_create_repo_wrapper(shell_href_data.base_url)
-
-    shell: model.AssetAdministrationShell = shell_repo_wrapper.get_asset_administration_shell_by_id(shell_id)
-
-    if shell is None:
-        logger.error(f"Asset Administration Shell with ID '{shell_id}' not found on server.")
-        raise HTTPException(
-            status_code=StatusCode.SHELL_NOT_FOUND.value, detail=f"Asset Administration Shell with ID '{shell_id}' not found on server."
-        )
-
-    logger.debug(f"Asset Administration Shell with ID '{shell_id}' found on server.")
-    return shell
-
-
 def _get_aimc_submodel(server_handler: ServerHandler, shell: model.AssetAdministrationShell) -> model.Submodel:
     """Get the Asset Interface Mapping Configuration (AIMC) submodel from the AAS.
 
@@ -114,16 +75,23 @@ def _get_aimc_submodel(server_handler: ServerHandler, shell: model.AssetAdminist
     :return: The AIMC submodel
     """
     logger.info("Get AIMC submodel from Shell.")
-    submodels: list[model.Submodel] = aas_parser.get_submodels_by_semantic_id(aas_server_wrapper, shell, "/idta/AssetInterfacesMappingConfiguration")
+    submodel_ids = aas_parser.get_submodel_ids(shell)
 
-    if len(submodels) == 0:
-        logger.error("Submodel with semantic ID '/idta/AssetInterfacesMappingConfiguration' not found on server.")
-        raise HTTPException(
-            status_code=StatusCode.AIMC_NOT_FOUND.value,
-            detail="Submodel with semantic ID '/idta/AssetInterfacesMappingConfiguration' not found on server.",
-        )
+    for submodel_id in submodel_ids:
+        logger.debug(f"Get submodel with ID '{submodel_id}' from server.")
+        submodel = get_submodel(server_handler, submodel_id)
 
-    return submodels[0]
+        semantic_id_value = submodel_parser.get_semantic_id_value(submodel)
+
+        if semantic_id_value and "/idta/AssetInterfacesMappingConfiguration" in semantic_id_value:
+            logger.debug(f"AIMC submodel with ID '{submodel_id}' found on server.")
+            return submodel
+
+    logger.error("No Submodel with semantic ID '/idta/AssetInterfacesMappingConfiguration' not found on server.")
+    raise HTTPException(
+        status_code=StatusCode.AIMC_NOT_FOUND.value,
+        detail="No Submodel with semantic ID '/idta/AssetInterfacesMappingConfiguration' not found on server.",
+    )
 
 
 def _get_mapping_configurations(aimc_submodel: model.Submodel) -> MappingConfigurations:
@@ -144,16 +112,18 @@ def _get_mapping_configurations(aimc_submodel: model.Submodel) -> MappingConfigu
     return mapping_configurations
 
 
-def _get_aid_submodels(aas_server_wrapper: SdkWrapper, aid_submodel_ids: list[str]) -> list[model.Submodel]:
-    """Get the Asset Interface Description (AID) submodel from the AAS.
-
-    :param aas_server_wrapper: The SDK wrapper for the AAS server
-    :param aas: The AAS to get the submodel from
-    :raises HTTPException: If the AID submodel could not be found
-    :return: The AID submodel
-    """
+def _get_aid_submodels(server_handler: ServerHandler, aid_submodel_ids: list[str]) -> list[model.Submodel]:
     logger.info("Get AID submodels from Shell.")
-    submodels: list[model.Submodel] = aas_parser.get_submodels_by_id(aas_server_wrapper, aid_submodel_ids)
+    submodels: list[model.Submodel] = []
+    for submodel_id in aid_submodel_ids:
+        logger.debug(f"Get submodel with ID '{submodel_id}' from server.")
+        submodel = get_submodel(server_handler, submodel_id)
+
+        semantic_id_value = submodel_parser.get_semantic_id_value(submodel)
+
+        if semantic_id_value and "/idta/AssetInterfacesDescription" in semantic_id_value:
+            logger.debug(f"AID submodel with ID '{submodel_id}' found on server.")
+            submodels.append(submodel)
 
     if len(submodels) == 0:
         logger.error("No Submodels with semantic ID '/idta/AssetInterfacesDescription' not found on server.")
@@ -165,7 +135,7 @@ def _get_aid_submodels(aas_server_wrapper: SdkWrapper, aid_submodel_ids: list[st
     return submodels
 
 
-def _connect_to_asset_connector(configuration: ServiceConfiguration) -> AssetConnectorClient:
+def _connect_to_asset_connector(configuration: ServerConfiguration) -> AssetConnectorClient:
     """Connect to the Asset Connector using the provided configuration.
 
     :param configuration: The service configuration
@@ -173,9 +143,8 @@ def _connect_to_asset_connector(configuration: ServiceConfiguration) -> AssetCon
     :return: The Asset Connector client
     """
     logger.info("Connect to Asset connector.")
-
     try:
-        client = create_client(configuration.asset_connector_configuration)
+        client = create_client(configuration.server_configuration)
     except Exception as ve:
         logger.error(f"Could not create Asset Connector client: {ve}")
         raise HTTPException(
@@ -212,32 +181,3 @@ def _configure_asset_connector(asset_connector_client: AssetConnectorClient, aid
                 status_code=StatusCode.AID_CONFIGURATION_ERROR.value,
                 detail=f"Could not add AID submodel '{aid_submodel.id_short}' configuration to Asset Connector.",
             )
-
-
-def get_endpoint_href(descriptor_data: dict, endpoint_index: int = 0) -> str | None:
-    """Get the href from a descriptor's endpoints.
-
-    :param descriptor_data: The descriptor data containing endpoints.
-    :param endpoint_index: The index of the endpoint to extract the href from.
-    :return: The href string if found, otherwise None.
-    """
-    endpoints = get_endpoint_hrefs(descriptor_data)
-
-    if not endpoints or len(endpoints) == 0:
-        logger.warning(f"No endpoints found in descriptor {descriptor_data}")
-        return None
-
-    if endpoint_index >= len(endpoints):
-        logger.warning(f"Endpoint index {endpoint_index} out of range for descriptor {descriptor_data}")
-        return None
-
-    return endpoints[endpoint_index]
-
-
-def get_endpoint_hrefs(descriptor_data: dict) -> list[str]:
-    """Get all hrefs from a descriptor's endpoints.
-
-    :param descriptor_data: The descriptor data containing endpoints.
-    :return: A list of href strings extracted from the endpoints.
-    """
-    return [endpoint.get("protocolInformation", {}).get("href", "") for endpoint in descriptor_data.get("endpoints", [])]

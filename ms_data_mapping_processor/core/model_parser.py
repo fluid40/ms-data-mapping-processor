@@ -7,35 +7,6 @@ from basyx.aas import model
 logger = logging.getLogger(__name__)
 
 
-def get_submodels_by_id(wrapper: SdkWrapper, submodel_ids: list[str]) -> list[model.Submodel]:
-    """Get all submodels from the AAS.
-
-    :param wrapper: The SDK wrapper for the AAS server
-    :param aas: The AAS to get the submodels from
-    :return: A list of all submodels in the AAS
-    """
-    submodels: list[model.Submodel] = []
-
-    logger.info(f"Get {len(submodel_ids)} submodels by IDs from server.")
-
-    for sm_id in submodel_ids:
-        logger.debug(f"Get submodel with ID '{sm_id}'.")
-        sm = wrapper.get_submodel_by_id(sm_id)
-
-        if sm is None:
-            logger.error(f"Submodel with ID '{sm_id}' not found on server.")
-            continue
-
-        submodels.append(sm)
-
-    if len(submodels) == 0:
-        logger.warning("No submodels found on server.")
-
-    logger.debug(f"Found {len(submodels)} submodels on server.")
-
-    return submodels
-
-
 def get_aid_submodels(wrapper: SdkWrapper, aas: model.AssetAdministrationShell) -> list[model.Submodel]:
     """Get the Asset Interface Description (AID) submodel from the AAS.
 
