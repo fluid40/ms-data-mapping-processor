@@ -6,7 +6,7 @@ services:
       - bridge
 
   asset_connector:
-    image: engineeringmethodsag/fluid-asset-connector-python:latest
+    image: engineeringmethodsag/ms-asset-connector:latest
     container_name: ms-asset-connector
     depends_on:
       - opcua_press_mockup

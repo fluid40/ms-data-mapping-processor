@@ -126,6 +126,7 @@ def create_client(config_dict: dict) -> AssetConnectorClient | None:
     :raises ValidationError: If the configuration is invalid.
     :return: A AssetConnectorClient instance or None if creation failed.
     """
+
     logger.info("Create Asset Connector client.")
 
     try:
