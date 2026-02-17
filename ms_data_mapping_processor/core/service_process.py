@@ -6,6 +6,8 @@ from aas_standard_parser import submodel_parser
 from basyx.aas import model
 from basyx.aas.model.base import DataTypeDefXsd
 
+from ms_data_mapping_processor.core.aas_env_processor import get_shell, get_submodel
+from ms_data_mapping_processor.core.server_handler import ServerHandler
 from ms_data_mapping_processor.models.process_models import ServiceStates
 from ms_data_mapping_processor.models.value_data_models import PayloadValue
 
@@ -50,16 +52,16 @@ def get_asset_values(states: ServiceStates):
             )
 
             # Update target property in submodel with received payload value
-            _update_target_property_with_payload(payload_value, states.aas_server_wrapper_list, states.dynamic_submodel_cache)
+            _update_target_property_with_payload(payload_value, states.server_handler, states.dynamic_submodel_cache)
 
             asset_values.append(payload_value)
 
 
-def _update_target_property_with_payload(payload_value: PayloadValue, wrapper: SdkWrapper, submodel_cache: dict[str, model.Submodel]):
+def _update_target_property_with_payload(payload_value: PayloadValue, server_handler: ServerHandler, submodel_cache: dict[str, model.Submodel]):
     """Write payload value to target property in submodel.
 
     :param payload_values: payload value to write as property value.
-    :param wrapper: The SDK wrapper.
+    :param server_handler: The server handler.
     :param submodel_cache: The submodel cache.
     :param measurement: The measurement name.
     """
@@ -87,11 +89,12 @@ def _update_target_property_with_payload(payload_value: PayloadValue, wrapper: S
     target_property.value = _convert_value(payload_value.value, target_property.value_type)
 
 
-def _get_submodel_from_cache(submodel_id: str, wrapper: SdkWrapper, submodel_cache: dict[str, model.Submodel]) -> model.Submodel | None:
+def _get_submodel_from_cache(submodel_id: str, server_handler: ServerHandler, submodel_cache: dict[str, model.Submodel]) -> model.Submodel | None:
     """Get a submodel from the cache.
 
     :param submodel_id: The ID of the submodel.
-    :param wrapper: The SDK wrapper.
+    :param server_handler: The server handler.
+    :param submodel_cache: The submodel cache.
     :return: The submodel if found, None otherwise.
     """
     # Check if submodel is already in cache
@@ -100,7 +103,7 @@ def _get_submodel_from_cache(submodel_id: str, wrapper: SdkWrapper, submodel_cac
         return submodel_cache[submodel_id]
 
     # Fetch submodel from AAS server
-    submodel = wrapper.get_submodel_by_id(submodel_id)
+    submodel = get_submodel(server_handler, submodel_id)
     if submodel is None:
         logger.warning(f"Submodel with ID '{submodel_id}' not found on server.")
         return None
