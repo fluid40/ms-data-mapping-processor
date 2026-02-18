@@ -46,7 +46,7 @@ services:
       - bridge
 
   java_aas_server:
-    image: eclipsebasyx/aas-environment:2.0.0-milestone-08
+    image: eclipsebasyx/aas-environment:2.0.0-SNAPSHOT
     container_name: aas-server
     ports:
       - "8075:8075"
