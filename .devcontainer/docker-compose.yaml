@@ -13,27 +13,6 @@ services:
     networks:
       - bridge
 
-  java_aas_server:
-    image: eclipsebasyx/aas-environment:2.0.0-SNAPSHOT
-    container_name: aas-server
-    ports:
-      - "8075:8075"
-    environment:
-      - SERVER_PORT=8075
-      - SERVER_HOST=javaaasserver
-    volumes:
-      - ./aas:/application/aas
-      - ./basyx/aas-env.properties:/application/application.properties
-    depends_on:
-      aas-registry:
-        condition: service_healthy
-      sm-registry:
-        condition: service_healthy
-      mongo:
-        condition: service_healthy
-    networks:
-      - bridge
-
   aas-registry:
     image: eclipsebasyx/aas-registry-log-mongodb:2.0.0-SNAPSHOT
     container_name: aas-registry
@@ -63,6 +42,27 @@ services:
         condition: service_healthy
     ports:
       - "8077:8080"
+    networks:
+      - bridge
+
+  java_aas_server:
+    image: eclipsebasyx/aas-environment:2.0.0-milestone-08
+    container_name: aas-server
+    ports:
+      - "8075:8075"
+    environment:
+      - SERVER_PORT=8075
+      - SERVER_HOST=javaaasserver
+    volumes:
+      - ./aas:/application/aas
+      - ./basyx/aas-env.properties:/application/application.properties
+    depends_on:
+      aas-registry:
+        condition: service_healthy
+      sm-registry:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
     networks:
       - bridge
 
@@ -129,6 +129,7 @@ services:
 
 networks:
   bridge:
+
 
 volumes:
   mongo_data:

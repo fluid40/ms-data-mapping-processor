@@ -57,7 +57,8 @@ def get_shell(server_handler: ServerHandler, shell_id: str) -> model.AssetAdmini
             status_code=StatusCode.SHELL_NOT_FOUND.value, detail=f"Asset Administration Shell with ID '{shell_id}' not found on server."
         )
 
-    logger.debug(f"Asset Administration Shell with ID '{shell_id}' found on server.")
+    shell_name = shell.display_name if shell.display_name else shell.id_short
+    logger.info(f"Asset Administration Shell '{shell_name}' with ID '{shell_id}' found on server.")
     return shell
 
 

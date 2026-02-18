@@ -66,10 +66,10 @@ def _update_target_property_with_payload(payload_value: PayloadValue, server_han
     :param measurement: The measurement name.
     """
     logger.info(
-        f"Write payload value '{payload_value.value}' to element '{payload_value.target_element_path}' in submodel '{payload_value.target_submodel_id}'"
+        f"Write value '{payload_value.value}' to element '{payload_value.target_element_path}' in submodel '{payload_value.target_submodel_id}'"
     )
     # get target submodel
-    target_submodel = _get_submodel_from_cache(payload_value.target_submodel_id, wrapper, submodel_cache)
+    target_submodel = _get_submodel_from_cache(payload_value.target_submodel_id, server_handler, submodel_cache)
 
     if target_submodel is None:
         logger.error(f"Target submodel with ID '{payload_value.target_submodel_id}' not found.")

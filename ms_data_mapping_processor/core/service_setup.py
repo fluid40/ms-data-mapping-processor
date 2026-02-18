@@ -85,7 +85,7 @@ def _get_aimc_submodel(server_handler: ServerHandler, shell: model.AssetAdminist
 
         if semantic_id_value and "/idta/AssetInterfacesMappingConfiguration" in semantic_id_value:
             logger.debug(f"AIMC submodel with ID '{submodel_id}' found on server.")
-            # return submodel
+            return submodel
 
     logger.error("No Submodel with semantic ID '/idta/AssetInterfacesMappingConfiguration' not found on server.")
     raise HTTPException(
