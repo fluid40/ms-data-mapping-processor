@@ -1,3 +1,5 @@
+import logging
+
 from aas_http_client import encoder, sdk_tools
 from aas_standard_parser import submodel_parser
 from basyx.aas import model
@@ -6,6 +8,7 @@ from fastapi import APIRouter, HTTPException, Request
 from ms_data_mapping_processor.models.process_models import ServiceStates
 
 router = APIRouter()
+_logger = logging.getLogger(__name__)
 
 
 # GET /submodels/{submodelIdentifier}
@@ -241,7 +244,7 @@ async def get_submodel_by_id_metadata(request: Request, submodelIdentifier: str)
         raise HTTPException(status_code=500, detail=f"Server error: {e}") from e
 
 
-def _get_sme_value(sme):
+def _get_sme_value(sme) -> dict | str | list:
     if not hasattr(sme, "value"):
         raise ValueError("SubmodelElement does not have a value attribute.")
 
@@ -256,4 +259,5 @@ def _get_sme_value(sme):
 
         return values
 
-    raise ValueError("Unsupported SubmodelElement type for value retrieval.")
+    _logger.debug("Unsupported SubmodelElement type for value retrieval '%s'.", type(sme).__name__)
+    return {}
