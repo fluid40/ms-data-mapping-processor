@@ -1,22 +1,74 @@
 {
+    // ---------------------------------------
+    // SPELLING / CSPELL
+    // ---------------------------------------
     "cSpell.words": [
-        "aimc",
+        "AIMC",
         "basyx",
-        "eclipsebasyx",
-        "engineeringmethodsag",
-        "healthcheck",
-        "idta",
-        "mqtt",
-        "opcua",
+        "puremagic",
         "Pypi",
         "submodel",
-        "submodels"
+        "submodels",
+        "superpath"
     ],
+    "cSpell.enableFiletypes": [
+        "jinja",
+        "jinja-md",
+        "jinja-py",
+        "jinja-toml",
+        "jinja-yaml",
+        "shellscript"
+    ],
+    // ---------------------------------------
+    // PYTHON / RUFF / TESTING
+    // ---------------------------------------
     "python.testing.pytestArgs": [
         "tests"
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports.ruff": "explicit"
+        }
+    },
+    // ---------------------------------------
+    // MARKDOWN FORMATTER
+    // ---------------------------------------
+    "[markdown]": {
+        "editor.defaultFormatter": "mervin.markdown-formatter",
+        "editor.formatOnSave": true
+    },
+    // optional: Feineinstellungen für mervin.markdown-formatter
+    "markdown-formatter.formatOpt": true,
+    "markdown-formatter.table.format": true,
+    "markdown-formatter.list.format": true,
+    "markdown-formatter.link.format": true,
+    "markdown-formatter.blankLines.keepOne": true,
+    // ---------------------------------------
+    // EDITOR BASICS
+    // ---------------------------------------
+    "editor.formatOnSave": true,
+    "editor.minimap.maxColumn": 150,
+    "editor.renderWhitespace": "selection",
+    "editor.renderControlCharacters": true,
+    "editor.rulers": [
+        {
+            "column": 140,
+            "color": "#0b8600"
+        },
+        {
+            "column": 150,
+            "color": "#865100"
+        }
+    ],
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.eol": "\n",
+    // ---------------------------------------
+    // FILE EXCLUDES
+    // ---------------------------------------
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
@@ -30,46 +82,29 @@
         "**/__pycache__": true,
         "**/__pypackages__": true
     },
-    "autoDocstring.docstringFormat": "sphinx-notypes",
-    "autoDocstring.guessTypes": true,
-    "files.insertFinalNewline": true,
-    "files.eol": "\n",
-    "[python]": {
-        "editor.codeActionsOnSave": {
-            "source.organizeImports.ruff": "explicit"
-        },
-        "editor.defaultFormatter": "charliermarsh.ruff"
+    // ---------------------------------------
+    // VISUAL THEMING
+    // ---------------------------------------
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#0F332F",
+        "titleBar.activeBackground": "#164841",
+        "titleBar.activeForeground": "#F5FCFB"
     },
-    "editor.formatOnSave": true,
-    "[html]": {
-        "editor.formatOnSave": false
-    },
-    "editor.minimap.maxColumn": 150,
-    "editor.rulers": [
-        {
-            "column": 140,
-            "color": "#0b8600"
-        },
-        {
-            "column": 150,
-            "color": "#865100"
-        }
-    ],
+    // ---------------------------------------
+    // GIT
+    // ---------------------------------------
     "git.alwaysSignOff": true,
+    // ---------------------------------------
+    // EXPLORER / FILE NESTING
+    // ---------------------------------------
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.expand": false,
     "explorer.fileNesting.patterns": {
         "*": "${capture}.license"
     },
-    "files.trimTrailingWhitespace": true,
-    "editor.renderWhitespace": "selection",
-    "editor.renderControlCharacters": true,
-    "cSpell.enableFiletypes": [
-        "jinja",
-        "jinja-md",
-        "jinja-py",
-        "jinja-toml",
-        "jinja-yaml",
-        "shellscript"
-    ],
+    // ---------------------------------------
+    // AUTODOCSTRING
+    // ---------------------------------------
+    "autoDocstring.docstringFormat": "sphinx-notypes",
+    "autoDocstring.guessTypes": true
 }
