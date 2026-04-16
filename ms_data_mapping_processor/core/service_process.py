@@ -1,20 +1,16 @@
 import datetime
 import logging
 
-from aas_http_client import SdkWrapper
 from aas_standard_parser import submodel_parser
 from basyx.aas import model
 from basyx.aas.model.base import DataTypeDefXsd
 
-from ms_data_mapping_processor.core.aas_env_processor import get_shell, get_submodel
+from ms_data_mapping_processor.core.aas_env_processor import get_submodel
 from ms_data_mapping_processor.core.server_handler import ServerHandler
 from ms_data_mapping_processor.models.process_models import ServiceStates
 from ms_data_mapping_processor.models.value_data_models import PayloadValue
 
-logger = logging.getLogger(__name__)
-
-# Global counter for runtime process executions
-counter = 1
+_logger = logging.getLogger(__name__)
 
 
 def get_asset_values(states: ServiceStates):
@@ -24,13 +20,13 @@ def get_asset_values(states: ServiceStates):
     :param asset_connector: The asset connector client.
     :param influx_client: The InfluxDB client.
     """
-    logger.info("Get asset values from asset connector based on mapping configurations.")
+    _logger.info("Get asset values from asset connector based on mapping configurations.")
     for configuration in states.mapping_configurations.configurations:
         asset_values: list[PayloadValue] = []
 
         # Process each source-sink relation from aimc mapping configuration
         for relation in configuration.source_sink_relations:
-            logger.debug(f"Get value for submodel element: {relation.source_properties.property_name}")
+            _logger.debug(f"Get value for submodel element: {relation.source_properties.property_name}")
 
             # Prepare source reference data for asset connector
             source_references_data = {"Reference": relation.source_reference_as_dict()}
@@ -38,10 +34,10 @@ def get_asset_values(states: ServiceStates):
             value = states.asset_connector_client.get_value(source_references_data)
 
             if value is None or value.payload is None:
-                logger.warning(f"No value received for '{relation.source_properties.property_name}'")
+                _logger.warning(f"No value received for '{relation.source_properties.property_name}'")
                 continue
 
-            logger.info(f"Received value '{relation.source_properties.property_name}': {value.payload}")
+            _logger.info(f"Received value '{relation.source_properties.property_name}': {value.payload}")
             payload_value = PayloadValue(
                 value.payload,
                 relation.source_properties.property_name,
@@ -65,24 +61,24 @@ def _update_target_property_with_payload(payload_value: PayloadValue, server_han
     :param submodel_cache: The submodel cache.
     :param measurement: The measurement name.
     """
-    logger.info(
+    _logger.info(
         f"Write value '{payload_value.value}' to element '{payload_value.target_element_path}' in submodel '{payload_value.target_submodel_id}'"
     )
     # get target submodel
     target_submodel = _get_submodel_from_cache(payload_value.target_submodel_id, server_handler, submodel_cache)
 
     if target_submodel is None:
-        logger.error(f"Target submodel with ID '{payload_value.target_submodel_id}' not found.")
+        _logger.error(f"Target submodel with ID '{payload_value.target_submodel_id}' not found.")
         return
 
     target_element = submodel_parser.get_submodel_element_by_id_short_path(target_submodel, payload_value.target_element_path)
 
     if target_element is None:
-        logger.error(f"Target element with path '{payload_value.target_element_path}' not found in submodel: {payload_value.target_submodel_id}")
+        _logger.error(f"Target element with path '{payload_value.target_element_path}' not found in submodel: {payload_value.target_submodel_id}")
         return
 
     if not isinstance(target_element, model.Property):
-        logger.error(f"Target element with path '{payload_value.target_element_path}' is not a property.")
+        _logger.error(f"Target element with path '{payload_value.target_element_path}' is not a property.")
         return
 
     target_property: model.Property = target_element
@@ -105,7 +101,7 @@ def _get_submodel_from_cache(submodel_id: str, server_handler: ServerHandler, su
     # Fetch submodel from AAS server
     submodel = get_submodel(server_handler, submodel_id)
     if submodel is None:
-        logger.warning(f"Submodel with ID '{submodel_id}' not found on server.")
+        _logger.warning(f"Submodel with ID '{submodel_id}' not found on server.")
         return None
 
     # Cache the fetched submodel

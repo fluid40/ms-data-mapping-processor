@@ -19,7 +19,7 @@ from ms_data_mapping_processor.models.constants import CONFIG_BASE_PATH
 from ms_data_mapping_processor.models.process_models import ServiceStates
 from ms_data_mapping_processor.utilities import logging_handler
 
-logger = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 async def worker(stop_event: asyncio.Event, states, interval: int = 5):
@@ -34,7 +34,7 @@ async def worker(stop_event: asyncio.Event, states, interval: int = 5):
             get_asset_values(states)
             # get_asset_values_old(states.references, states.asset_connector, states.influx_client)
         except Exception as e:
-            logger.error(f"Error in worker: {e}")
+            _logger.error(f"Error in worker: {e}")
 
         # Either wait for timeout or quit sooner if stop_event is triggered
         _, pending = await asyncio.wait(
@@ -51,34 +51,34 @@ async def lifespan(app: FastAPI):
 
     :param app: FastAPI application
     """
-    logger.info("Initialize the microservice ")
+    _logger.info("Initialize the microservice ")
     app.state.service_states = None
 
     try:
         # Load configuration
-        logger.debug("Get configuration file name from environment variable 'CONFIG_FILE_NAME'.")
+        _logger.debug("Get configuration file name from environment variable 'CONFIG_FILE_NAME'.")
         config_file_name = os.getenv("CONFIG_FILE_NAME", "service_config.json")
         config_file_path = Path(CONFIG_BASE_PATH) / config_file_name
 
         configuration = load_configuration_file(config_file_path)
 
         if configuration is None:
-            logger.error("Failed to load runtime configuration. Shutting down the application.")
+            _logger.error("Failed to load runtime configuration. Shutting down the application.")
             raise RuntimeError("Failed to load runtime configuration.")
 
         # Setup microservice
         service_states: ServiceStates = setup_service(configuration)
 
         app.state.service_states = service_states
-        logger.info("Microservice initialized successfully.")
+        _logger.info("Microservice initialized successfully.")
 
     except Exception as e:
-        logger.error(f"Error during microservice initialization: {e}")
+        _logger.error(f"Error during microservice initialization: {e}")
         raise e
 
     # Start background worker for microservice main processing
     try:
-        logger.info("Start asset connector polling")
+        _logger.info("Start asset connector polling")
 
         stop_event = asyncio.Event()
         task = asyncio.create_task(
@@ -93,11 +93,11 @@ async def lifespan(app: FastAPI):
         stop_event.set()
         await task  # wait until finished correctly
     except Exception as e:
-        logger.exception(f"Shutdown failed: {e}")
+        _logger.exception(f"Shutdown failed: {e}")
         raise e
 
     finally:
-        logger.info("Shutdown microservice complete.")
+        _logger.info("Shutdown microservice complete.")
 
     yield
     # Perform any necessary cleanup here

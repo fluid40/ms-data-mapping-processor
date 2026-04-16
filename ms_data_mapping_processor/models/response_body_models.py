@@ -10,28 +10,28 @@ class AssetConnectorResponseBody(BaseModel):  # noqa: D101
         default=200,
         description="The HTTP status code of the response.",
         alias="StatusCode",
-        example=200,
+        examples=[200],
     )
 
     message: str = Field(
         default="Successfully",
         description="A message providing additional information about the response.",
         alias="Message",
-        example="Successfully invoked `/set-config` with raw JSON in payload",
+        examples=["Successfully invoked `/set-config` with raw JSON in payload"],
     )
 
     payload: Any = Field(
         default={},
         description="Json content of the response.",
         alias="Payload",
-        example="",
+        examples=[{}],
     )
 
     value: str = Field(
         default="",
         description="The value returned by the operation, if applicable.",
         alias="Value",
-        example="myResult",
+        examples=["myResult"],
     )
 
     def get_success(self) -> bool:  # noqa: D102

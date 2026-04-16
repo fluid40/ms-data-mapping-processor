@@ -11,7 +11,7 @@ from requests import Session
 
 from ms_data_mapping_processor.models.response_body_models import AssetConnectorResponseBody
 
-logger = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 class AssetConnectorClient(BaseModel):
@@ -44,31 +44,31 @@ class AssetConnectorClient(BaseModel):
         :param configuration: The configuration dictionary to use for the request.
         :return: The response from the Asset Connector or None if an error occurred.
         """
-        logger.debug(f"Set configuration for Asset Connector at '{self.base_url}'.")
+        _logger.debug(f"Set configuration for Asset Connector at '{self.base_url}'.")
         url = urljoin(self.base_url, "/add-config")
 
         try:
             response = self._session.post(url, json=configuration)
-            logger.debug(f"Call REST API url '{response.url}'")
+            _logger.debug(f"Call REST API url '{response.url}'")
 
             if response.status_code != 200:
-                logger.error(f"{response.status_code} - Failed to call '{response.url}': {response.text}")
+                _logger.error(f"{response.status_code} - Failed to call '{response.url}': {response.text}")
                 return None
 
             ac_response = AssetConnectorResponseBody(**json.loads(response.content))
 
             if ac_response.status_code != 200:
-                logger.error(f"Failed to set config. {ac_response.status_code}: {ac_response.message} - {ac_response.value}")
+                _logger.error(f"Failed to set config. {ac_response.status_code}: {ac_response.message} - {ac_response.value}")
                 return None
 
             if not ac_response.value:
-                logger.error(f"Failed to retrieve AID submodel ID from response: {ac_response.message}")
+                _logger.error(f"Failed to retrieve AID submodel ID from response: {ac_response.message}")
                 return None
 
             return ac_response
 
         except Exception as e:
-            logger.error(f"Failed to set config: {e}")
+            _logger.error(f"Failed to set config: {e}")
             return None
 
     def get_value(self, configuration: dict) -> AssetConnectorResponseBody | None:
@@ -77,26 +77,26 @@ class AssetConnectorClient(BaseModel):
         :param configuration: The configuration dictionary to use for the request.
         :return: The MQTT data or an error message.
         """
-        logger.debug(f"Get value from Asset Connector at '{self.base_url}'.")
+        _logger.debug(f"Get value from Asset Connector at '{self.base_url}'.")
         url = urljoin(self.base_url, "/get-value")
 
         try:
             response = self._session.post(url, json=configuration)
-            logger.debug(f"Call REST API url '{response.url}'")
+            _logger.debug(f"Call REST API url '{response.url}'")
 
             if response.status_code != 200:
-                logger.error(f"{response.status_code} - {response.url}': {response.text}")
+                _logger.error(f"{response.status_code} - {response.url}': {response.text}")
 
             ac_response = AssetConnectorResponseBody(**json.loads(response.content))
 
             if ac_response.status_code != 200:
-                logger.error(f"Failed to get value. {ac_response.status_code}: {ac_response.message}")
+                _logger.error(f"Failed to get value. {ac_response.status_code}: {ac_response.message}")
                 return None
 
             return ac_response
 
         except Exception as e:
-            logger.error(f"Failed to get value: {e}")
+            _logger.error(f"Failed to get value: {e}")
             return None
 
     def get_root(self) -> dict | None:
@@ -106,16 +106,16 @@ class AssetConnectorClient(BaseModel):
         """
         try:
             response = self._session.get(self.base_url)
-            logger.debug(f"Call REST API url '{response.url}'")
+            _logger.debug(f"Call REST API url '{response.url}'")
 
             if response.status_code != 200:
-                logger.error(f"{response.status_code} - Failed to call '{response.url}': {response.text}")
+                _logger.error(f"{response.status_code} - Failed to call '{response.url}': {response.text}")
                 return None
 
             return response.json()
 
         except Exception as e:
-            logger.error(f"Failed to get root: {e}")
+            _logger.error(f"Failed to get root: {e}")
             return None
 
 
@@ -126,8 +126,7 @@ def create_client(config_dict: dict) -> AssetConnectorClient | None:
     :raises ValidationError: If the configuration is invalid.
     :return: A AssetConnectorClient instance or None if creation failed.
     """
-
-    logger.info("Create Asset Connector client.")
+    _logger.info("Create Asset Connector client.")
 
     try:
         config_string = json.dumps(config_dict, indent=4)
@@ -135,7 +134,7 @@ def create_client(config_dict: dict) -> AssetConnectorClient | None:
     except ValidationError as ve:
         raise ValidationError(f"Invalid Asset Connector configuration file: {ve}") from ve
 
-    logger.info(f"Using Asset Connector configuration: '{client.base_url}'.'")
+    _logger.info(f"Using Asset Connector configuration: '{client.base_url}'.'")
 
     connected = _establish_connection(client)
 
@@ -147,20 +146,20 @@ def create_client(config_dict: dict) -> AssetConnectorClient | None:
 
 def _establish_connection(client: AssetConnectorClient) -> bool:
     start_time = time.time()
-    logger.info(f"Try to connect to Asset Connector REST API '{client.base_url}' for {client.connection_time_out} seconds")
+    _logger.info(f"Try to connect to Asset Connector REST API '{client.base_url}' for {client.connection_time_out} seconds")
     counter: int = 0
     while True:
         try:
             root = client.get_root()
             if root:
-                logger.info(f"Connected to Asset Connector REST API at '{client.base_url}' successfully.")
+                _logger.info(f"Connected to Asset Connector REST API at '{client.base_url}' successfully.")
                 return True
         except requests.exceptions.ConnectionError:
             pass
         if time.time() - start_time > client.connection_time_out:
-            logger.error(f"Connection to Asset Connector REST API timed out after {client.connection_time_out} seconds.")
+            _logger.error(f"Connection to Asset Connector REST API timed out after {client.connection_time_out} seconds.")
             return False
 
         counter += 1
-        logger.warning(f"Retrying connection to Asset Connector (attempt: {counter})")
+        _logger.warning(f"Retrying connection to Asset Connector (attempt: {counter})")
         time.sleep(5)

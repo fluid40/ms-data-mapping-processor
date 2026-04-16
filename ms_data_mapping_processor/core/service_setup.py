@@ -17,7 +17,7 @@ from ms_data_mapping_processor.models.configuration_models import ServerConfigur
 from ms_data_mapping_processor.models.constants import StatusCode
 from ms_data_mapping_processor.models.process_models import ProcessData, ServiceStates
 
-logger = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 def setup_service(configuration: ServiceConfiguration) -> ServiceStates:
@@ -27,7 +27,7 @@ def setup_service(configuration: ServiceConfiguration) -> ServiceStates:
     :return: An instance of ServiceStates with the provided configuration.
     """
     if configuration is None:
-        logger.error("No configuration provided for service setup.")
+        _logger.error("No configuration provided for service setup.")
         raise HTTPException(status_code=StatusCode.CONFIGURATION_ERROR.value, detail="No configuration provided for service setup.")
 
     server_configurations = ServerConfigurationsHandler()
@@ -74,7 +74,7 @@ def _get_aimc_submodel(server_handler: ServerHandler, shell: model.AssetAdminist
     :raises HTTPException: If the AIMC submodel could not be found
     :return: The AIMC submodel
     """
-    logger.info("Get AIMC submodel from Shell.")
+    _logger.info("Get AIMC submodel from Shell.")
     submodel_ids = aas_parser.get_submodel_ids(shell)
 
     for submodel_id in submodel_ids:
@@ -83,10 +83,10 @@ def _get_aimc_submodel(server_handler: ServerHandler, shell: model.AssetAdminist
         semantic_id_value = submodel_parser.get_semantic_id_value(submodel)
 
         if semantic_id_value and "/idta/AssetInterfacesMappingConfiguration" in semantic_id_value:
-            logger.info(f"AIMC submodel with ID '{submodel_id}' found on server.")
+            _logger.info(f"AIMC submodel with ID '{submodel_id}' found on server.")
             return submodel
 
-    logger.error("No Submodel with semantic ID '/idta/AssetInterfacesMappingConfiguration' not found on server.")
+    _logger.error("No Submodel with semantic ID '/idta/AssetInterfacesMappingConfiguration' not found on server.")
     raise HTTPException(
         status_code=StatusCode.AIMC_NOT_FOUND.value,
         detail="No Submodel with semantic ID '/idta/AssetInterfacesMappingConfiguration' not found on server.",
@@ -102,7 +102,7 @@ def _get_mapping_configurations(aimc_submodel: model.Submodel) -> MappingConfigu
     mapping_configurations = aimc_parser.parse_mapping_configurations(aimc_submodel)
 
     if mapping_configurations is None or len(mapping_configurations.configurations) == 0:
-        logger.error("No mapping configurations found in AIMC submodel.")
+        _logger.error("No mapping configurations found in AIMC submodel.")
         raise HTTPException(
             status_code=StatusCode.MAPPING_PROCESSOR_ERROR.value,
             detail="No mapping configurations found in AIMC submodel.",
@@ -112,20 +112,20 @@ def _get_mapping_configurations(aimc_submodel: model.Submodel) -> MappingConfigu
 
 
 def _get_aid_submodels(server_handler: ServerHandler, aid_submodel_ids: list[str]) -> list[model.Submodel]:
-    logger.info("Get AID submodels from Shell.")
+    _logger.info("Get AID submodels from Shell.")
     submodels: list[model.Submodel] = []
     for submodel_id in aid_submodel_ids:
-        logger.debug(f"Get submodel with ID '{submodel_id}' from server.")
+        _logger.debug(f"Get submodel with ID '{submodel_id}' from server.")
         submodel = get_submodel(server_handler, submodel_id)
 
         semantic_id_value = submodel_parser.get_semantic_id_value(submodel)
 
         if semantic_id_value and "/idta/AssetInterfacesDescription" in semantic_id_value:
-            logger.info(f"AID submodel with ID '{submodel_id}' found on server.")
+            _logger.info(f"AID submodel with ID '{submodel_id}' found on server.")
             submodels.append(submodel)
 
     if len(submodels) == 0:
-        logger.error("No Submodels with semantic ID '/idta/AssetInterfacesDescription' not found on server.")
+        _logger.error("No Submodels with semantic ID '/idta/AssetInterfacesDescription' not found on server.")
         raise HTTPException(
             status_code=StatusCode.AID_NOT_FOUND.value,
             detail="No Submodels with semantic ID '/idta/AssetInterfacesDescription' not found on server.",
@@ -141,17 +141,17 @@ def _connect_to_asset_connector(configuration: ServerConfiguration) -> AssetConn
     :raises HTTPException: If the connection to the Asset Connector could not be established
     :return: The Asset Connector client
     """
-    logger.info("Connect to Asset connector.")
+    _logger.info("Connect to Asset connector.")
     try:
         client = create_client(configuration.server_configuration)
     except Exception as ve:
-        logger.error(f"Could not create Asset Connector client: {ve}")
+        _logger.error(f"Could not create Asset Connector client: {ve}")
         raise HTTPException(
             status_code=StatusCode.ASSET_CONNECTOR_CONNECTION_ERROR.value, detail="Could not connect to Asset Connector. Client not created."
         ) from ve
 
     if client is None:
-        logger.error("Could not connect to Asset Connector. Client not created.")
+        _logger.error("Could not connect to Asset Connector. Client not created.")
         raise HTTPException(
             status_code=StatusCode.ASSET_CONNECTOR_CONNECTION_ERROR.value, detail="Could not connect to Asset Connector. Client not created."
         )
@@ -165,17 +165,17 @@ def _configure_asset_connector(asset_connector_client: AssetConnectorClient, aid
     :param client: The Asset Connector client
     :param aid_submodels: The list of AID submodels
     """
-    logger.info(f"Add {len(aid_submodels)} AID submodel configurations to Asset Connector.")
+    _logger.info(f"Add {len(aid_submodels)} AID submodel configurations to Asset Connector.")
     for aid_submodel in aid_submodels:
         data_string = json.dumps(aid_submodel, cls=basyx.aas.adapter.json.AASToJsonEncoder)
         mqtt_config = {"Aid": json.loads(data_string)}
 
-        logger.info(f"Add AID submodel '{aid_submodel.id_short}' configuration to Asset Connector.")
+        _logger.info(f"Add AID submodel '{aid_submodel.id_short}' configuration to Asset Connector.")
 
         result = asset_connector_client.add_config(mqtt_config)
 
         if result is None or result.get_success() is False:
-            logger.error(f"Could not add AID submodel '{aid_submodel.id_short}' configuration to Asset Connector.")
+            _logger.error(f"Could not add AID submodel '{aid_submodel.id_short}' configuration to Asset Connector.")
             raise HTTPException(
                 status_code=StatusCode.AID_CONFIGURATION_ERROR.value,
                 detail=f"Could not add AID submodel '{aid_submodel.id_short}' configuration to Asset Connector.",
