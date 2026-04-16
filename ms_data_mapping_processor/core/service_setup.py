@@ -78,13 +78,12 @@ def _get_aimc_submodel(server_handler: ServerHandler, shell: model.AssetAdminist
     submodel_ids = aas_parser.get_submodel_ids(shell)
 
     for submodel_id in submodel_ids:
-        logger.debug(f"Get submodel with ID '{submodel_id}' from server.")
         submodel = get_submodel(server_handler, submodel_id)
 
         semantic_id_value = submodel_parser.get_semantic_id_value(submodel)
 
         if semantic_id_value and "/idta/AssetInterfacesMappingConfiguration" in semantic_id_value:
-            logger.debug(f"AIMC submodel with ID '{submodel_id}' found on server.")
+            logger.info(f"AIMC submodel with ID '{submodel_id}' found on server.")
             return submodel
 
     logger.error("No Submodel with semantic ID '/idta/AssetInterfacesMappingConfiguration' not found on server.")
@@ -122,7 +121,7 @@ def _get_aid_submodels(server_handler: ServerHandler, aid_submodel_ids: list[str
         semantic_id_value = submodel_parser.get_semantic_id_value(submodel)
 
         if semantic_id_value and "/idta/AssetInterfacesDescription" in semantic_id_value:
-            logger.debug(f"AID submodel with ID '{submodel_id}' found on server.")
+            logger.info(f"AID submodel with ID '{submodel_id}' found on server.")
             submodels.append(submodel)
 
     if len(submodels) == 0:

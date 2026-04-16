@@ -28,13 +28,19 @@ def get_shell(server_handler: ServerHandler, shell_id: str) -> model.AssetAdmini
         )
 
     logger.info(f"Get Asset Administration Shell with ID '{shell_id}' from server.")
+
+    logger.debug(
+        f"Retrieving Asset Administration Shell descriptor with ID '{shell_id}' from AAS registry server '{server_handler.aas_registry_client.base_url}'."
+    )
     shell_descriptor: dict = server_handler.aas_registry_client.shell_registry.get_asset_administration_shell_descriptor_by_id(shell_id)
 
     if shell_descriptor is None:
-        logger.error(f"Asset Administration Shell descriptor with ID '{shell_id}' not found in AAS registry.")
+        logger.error(
+            f"Asset Administration Shell descriptor with ID '{shell_id}' not found on AAS registry server '{server_handler.aas_registry_client.base_url}'."
+        )
         raise HTTPException(
             status_code=StatusCode.SHELL_NOT_FOUND.value,
-            detail=f"Asset Administration Shell descriptor with ID '{shell_id}' not found in AAS registry.",
+            detail=f"Asset Administration Shell descriptor with ID '{shell_id}' not found on AAS registry server '{server_handler.aas_registry_client.base_url}'.",
         )
 
     shell_href = descriptor_json_helper.get_endpoint_href_by_index(shell_descriptor, 0)
@@ -49,6 +55,7 @@ def get_shell(server_handler: ServerHandler, shell_id: str) -> model.AssetAdmini
             detail=f"Could not connect to Repository server at '{shell_href_data.base_url}'. Repository wrapper not created.",
         )
 
+    logger.debug(f"Retrieving Asset Administration Shell with ID '{shell_id}' from server '{shell_repo_wrapper.base_url}'.")
     shell: model.AssetAdministrationShell = shell_repo_wrapper.get_asset_administration_shell_by_id(shell_id)
 
     if shell is None:
@@ -78,6 +85,8 @@ def get_submodel(server_handler: ServerHandler, submodel_id: str) -> model.Submo
         raise HTTPException(status_code=StatusCode.CONFIGURATION_ERROR.value, detail="No Submodel ID provided in configuration file.")
 
     logger.info(f"Get Submodel with ID '{submodel_id}' from server.")
+
+    logger.debug(f"Retrieving Submodel descriptor with ID '{submodel_id}' from AAS registry server '{server_handler.aas_registry_client.base_url}'.")
     submodel_descriptor: dict = server_handler.sm_registry_client.submodel_registry.get_submodel_descriptor_by_id(submodel_id)
 
     if submodel_descriptor is None:
@@ -99,6 +108,7 @@ def get_submodel(server_handler: ServerHandler, submodel_id: str) -> model.Submo
             detail=f"Could not connect to Repository server at '{submodel_href_data.base_url}'. Repository wrapper not created.",
         )
 
+    logger.debug(f"Retrieving Submodel with ID '{submodel_id}' from server '{submodel_repo_wrapper.base_url}'.")
     submodel: model.Submodel = submodel_repo_wrapper.get_submodel_by_id(submodel_id)
 
     if submodel is None:

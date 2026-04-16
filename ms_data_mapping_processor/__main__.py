@@ -13,7 +13,7 @@ from fastapi_health import health
 
 from ms_data_mapping_processor.core.service_process import get_asset_values
 from ms_data_mapping_processor.core.service_setup import setup_service
-from ms_data_mapping_processor.endpoint_routes import default_endpoints
+from ms_data_mapping_processor.endpoint_routes import default_endpoints, submodels_endpoints
 from ms_data_mapping_processor.models.configuration_models import load_configuration_file
 from ms_data_mapping_processor.models.constants import CONFIG_BASE_PATH
 from ms_data_mapping_processor.models.process_models import ServiceStates
@@ -123,11 +123,12 @@ def is_healthy() -> bool:
 app.add_api_route("/health", health([is_healthy]), tags=["Root"])
 
 app.include_router(default_endpoints.router)
+app.include_router(submodels_endpoints.router)
 app.add_middleware(CORSMiddleware, allow_origins=["*"])
 
 if __name__ == "__main__" and os.getenv("RUN_SERVER", "1") == "1":
     """Run the FastAPI application."""
-    logging_handler.initialize_logging()
+    logging_handler.initialize_logging(logging.INFO)
     host = os.getenv("APP_HOST", "127.0.0.1")
     port = int(os.getenv("APP_PORT", "3088"))
     uvicorn.run(app, host=host, port=port, log_config=None)
