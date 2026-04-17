@@ -39,6 +39,16 @@ class ServiceConfiguration(BaseModel):
     polling_interval: int = Field(
         default=5, alias="PollingInterval", description="Polling interval in seconds for retrieving values from the broker."
     )
+    external_url: str = Field(
+        default="http://127.0.0.1",
+        alias="ExternalUrl",
+        description="The external URL for the server.",
+    )
+    external_port: str = Field(
+        default="3088",
+        alias="ExternalPort",
+        description="The external port for the server.",
+    )
 
 
 def load_configuration_file(config_file: Path) -> ServiceConfiguration | None:

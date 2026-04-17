@@ -14,7 +14,7 @@ from ms_data_mapping_processor.core.aas_env_processor import get_shell, get_subm
 from ms_data_mapping_processor.core.server_handler import ServerHandler
 from ms_data_mapping_processor.interfaces.asset_connector_interface import AssetConnectorClient, create_client
 from ms_data_mapping_processor.models.configuration_models import ServerConfiguration, ServerConfigurationsHandler, ServiceConfiguration
-from ms_data_mapping_processor.models.constants import StatusCode
+from ms_data_mapping_processor.models.constants import StatusCode, set_external_url_and_port
 from ms_data_mapping_processor.models.process_models import ProcessData, ServiceStates
 
 _logger = logging.getLogger(__name__)
@@ -29,6 +29,8 @@ def setup_service(configuration: ServiceConfiguration) -> ServiceStates:
     if configuration is None:
         _logger.error("No configuration provided for service setup.")
         raise HTTPException(status_code=StatusCode.CONFIGURATION_ERROR.value, detail="No configuration provided for service setup.")
+
+    set_external_url_and_port(configuration.external_url, str(configuration.external_port))
 
     server_configurations = ServerConfigurationsHandler()
 

@@ -1,9 +1,11 @@
-"""Main entry point for the microservice HTTP server."""
+"""
+Main entry point for the microservice HTTP server.
+"""
 
 import asyncio
 import logging
 import os
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, suppress
 from pathlib import Path
 
 import uvicorn
@@ -13,7 +15,10 @@ from fastapi_health import health
 
 from ms_data_mapping_processor.core.service_process import get_asset_values
 from ms_data_mapping_processor.core.service_setup import setup_service
-from ms_data_mapping_processor.endpoint_routes import default_endpoints, submodels_endpoints
+from ms_data_mapping_processor.endpoint_routes import (
+    default_endpoints,
+    submodels_endpoints,
+)
 from ms_data_mapping_processor.models.configuration_models import load_configuration_file
 from ms_data_mapping_processor.models.constants import CONFIG_BASE_PATH
 from ms_data_mapping_processor.models.process_models import ServiceStates
@@ -22,86 +27,106 @@ from ms_data_mapping_processor.utilities import logging_handler
 _logger = logging.getLogger(__name__)
 
 
-async def worker(stop_event: asyncio.Event, states, interval: int = 5):
-    """Worker thread that handles the polling of mqtt data.
+# ---------------------------------------------------------------------------
+# Background worker
+# ---------------------------------------------------------------------------
 
-    :param stop_event: _description_
-    :param states: _description_
-    :param interval: _description_
+
+async def worker(
+    stop_event: asyncio.Event,
+    states: ServiceStates,
+    interval: int = 5,
+) -> None:
     """
-    while not stop_event.is_set():
-        try:
-            get_asset_values(states)
-            # get_asset_values_old(states.references, states.asset_connector, states.influx_client)
-        except Exception as e:
-            _logger.error(f"Error in worker: {e}")
+    Background worker that periodically polls asset values.
 
-        # Either wait for timeout or quit sooner if stop_event is triggered
-        _, pending = await asyncio.wait(
-            [asyncio.create_task(stop_event.wait()), asyncio.create_task(asyncio.sleep(interval))],
-            return_when=asyncio.FIRST_COMPLETED,
-        )
-        for task in pending:
-            task.cancel()  # cancel not needed tasks
+    The worker cooperatively shuts down as soon as stop_event is set.
+    """
+    _logger.info("Worker started")
+
+    try:
+        while not stop_event.is_set():
+            try:
+                get_asset_values(states)
+            except Exception:
+                _logger.exception("Error while processing asset values")
+
+            # Wait for either shutdown or next polling interval
+            with suppress(TimeoutError):
+                await asyncio.wait_for(stop_event.wait(), timeout=interval)
+
+    finally:
+        _logger.info("Worker stopped")
+
+
+# ---------------------------------------------------------------------------
+# Lifespan handling (startup / shutdown)
+# ---------------------------------------------------------------------------
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Lifespan context manager for FastAPI application.
+    """Lifespan context manager for FastAPI application. Handles startup and graceful shutdown."""
+    _logger.info("Initializing microservice")
 
-    :param app: FastAPI application
-    """
-    _logger.info("Initialize the microservice ")
-    app.state.service_states = None
+    stop_event = asyncio.Event()
+    worker_task: asyncio.Task | None = None
 
+    # start server
     try:
-        # Load configuration
-        _logger.debug("Get configuration file name from environment variable 'CONFIG_FILE_NAME'.")
         config_file_name = os.getenv("CONFIG_FILE_NAME", "service_config.json")
         config_file_path = Path(CONFIG_BASE_PATH) / config_file_name
 
+        _logger.debug("Loading configuration from %s", config_file_path.as_posix())
+
         configuration = load_configuration_file(config_file_path)
-
         if configuration is None:
-            _logger.error("Failed to load runtime configuration. Shutting down the application.")
-            raise RuntimeError("Failed to load runtime configuration.")
+            raise RuntimeError("Failed to load runtime configuration")
 
-        # Setup microservice
         service_states: ServiceStates = setup_service(configuration)
-
         app.state.service_states = service_states
-        _logger.info("Microservice initialized successfully.")
 
-    except Exception as e:
-        _logger.error(f"Error during microservice initialization: {e}")
-        raise e
+        _logger.info("Microservice initialized successfully")
 
-    # Start background worker for microservice main processing
-    try:
-        _logger.info("Start asset connector polling")
-
-        stop_event = asyncio.Event()
-        task = asyncio.create_task(
+        _logger.info("Starting asset connector polling worker")
+        worker_task = asyncio.create_task(
             worker(
-                stop_event,
-                service_states,
-                configuration.polling_interval,
+                stop_event=stop_event,
+                states=service_states,
+                interval=configuration.polling_interval,
             )
-        )  # start background task
+        )
 
+        # Yield control to FastAPI (application is running)
         yield
-        stop_event.set()
-        await task  # wait until finished correctly
-    except Exception as e:
-        _logger.exception(f"Shutdown failed: {e}")
-        raise e
 
+    # shutdown server
     finally:
-        _logger.info("Shutdown microservice complete.")
+        _logger.info("Shutdown initiated")
 
-    yield
-    # Perform any necessary cleanup here
+        stop_event.set()
 
+        if worker_task:
+            try:
+                await worker_task
+            except asyncio.CancelledError:
+                _logger.debug("Worker task cancelled during shutdown")
+
+        _logger.info("Reset submodel descriptors on registry server to original hrefs")
+        # reset all changed descriptors to old href on registry server
+        for mapping in service_states.descriptor_mapping:
+            _logger.debug(f"Reset descriptor for submodel '{mapping.submodel_id}' to original href'")
+            # update 'slave' descriptor with old href on registry server
+            service_states.server_handler.sm_registry_client.submodel_registry.put_submodel_descriptor_by_id(
+                mapping.submodel_id, mapping.master_descriptor
+            )
+
+        _logger.info("Shutdown microservice complete")
+
+
+# ---------------------------------------------------------------------------
+# FastAPI application
+# ---------------------------------------------------------------------------
 
 app = FastAPI(
     title="runtime REST API",
@@ -111,24 +136,49 @@ app = FastAPI(
 )
 
 
-def is_healthy() -> bool:
-    """Check if the application is healthy. This is a placeholder function that always returns True.
+# ---------------------------------------------------------------------------
+# Health endpoint
+# ---------------------------------------------------------------------------
 
-    :return: True if the application is healthy, False otherwise.
-    """
+
+def is_healthy() -> bool:
+    """Health check endpoint."""
     return True
-    # return app.state.runtime is not None
 
 
 app.add_api_route("/health", health([is_healthy]), tags=["Root"])
 
+
+# ---------------------------------------------------------------------------
+# Routers & middleware
+# ---------------------------------------------------------------------------
+
 app.include_router(default_endpoints.router)
 app.include_router(submodels_endpoints.router)
-app.add_middleware(CORSMiddleware, allow_origins=["*"])
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# ---------------------------------------------------------------------------
+# Application entry point
+# ---------------------------------------------------------------------------
 
 if __name__ == "__main__" and os.getenv("RUN_SERVER", "1") == "1":
-    """Run the FastAPI application."""
     logging_handler.initialize_logging(logging.INFO)
+
     host = os.getenv("APP_HOST", "127.0.0.1")
     port = int(os.getenv("APP_PORT", "3088"))
-    uvicorn.run(app, host=host, port=port, log_config=None)
+
+    uvicorn.run(
+        app,
+        host=host,
+        port=port,
+        log_config=None,
+        timeout_graceful_shutdown=20,
+    )

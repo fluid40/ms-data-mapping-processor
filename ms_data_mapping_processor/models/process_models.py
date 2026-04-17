@@ -24,6 +24,21 @@ class ProcessData:
         self.display_name = display_name
 
 
+class DescriptorMapping:
+    """Class representing a mapping between master and slave descriptors."""
+
+    def __init__(self, master_descriptor: dict, slave_descriptor: dict, submodel_id: str):
+        """Initialize DescriptorMapping with given parameters.
+
+        :param master_descriptor: The master descriptor.
+        :param slave_descriptor: The slave descriptor.
+        :param submodel_id: The unique identifier for the asset.
+        """
+        self.master_descriptor = master_descriptor
+        self.slave_descriptor = slave_descriptor
+        self.submodel_id = submodel_id
+
+
 class ServiceStates:
     """Class representing the service states."""
 
@@ -33,11 +48,13 @@ class ServiceStates:
     server_handler: ServerHandler
     dynamic_submodel_cache: dict[str, model.Submodel]
     mapping_configurations: MappingConfigurations
+    descriptor_mapping: list[DescriptorMapping]
 
     def __init__(self, process_data: ProcessData):
         """Initialize ServiceStates with default values."""
         self.process_data: ProcessData = process_data
         self.dynamic_submodel_cache: dict[str, model.Submodel] = {}
+        self.descriptor_mapping: list[DescriptorMapping] = []
 
 
 class AasServerWrapper:
