@@ -1,0 +1,7 @@
+<map id="service_process._get_submodel_from_cache" name="service_process._get_submodel_from_cache">
+<area shape="rect" id="Node000001" title="Get a submodel from the cache." alt="" coords="435,13,611,53"/>
+<area shape="rect" id="Node000002" href="$namespaceservice__process.html#a86874c3732b9bda2cefe5df3b4cba2cd" title="Write payload value to target property in submodel." alt="" coords="204,5,387,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="421,35,387,35,387,30,421,30"/>
+<area shape="rect" id="Node000003" href="$namespaceservice__process.html#af47d2716a4c6cafb2d580ecdcdd80d89" title="Get the values from mapping configurations relations from broker." alt="" coords="5,13,156,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="190,35,156,35,156,30,190,30"/>
+</map>

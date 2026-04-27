@@ -1,0 +1,5 @@
+<map id="asset_connector_interface._establish_connection" name="asset_connector_interface._establish_connection">
+<area shape="rect" id="Node000001" title=" " alt="" coords="292,5,489,45"/>
+<area shape="rect" id="Node000002" href="$namespaceasset__connector__interface.html#a1f619f57da23ce5bc2d37a51f5552a1a" title="Create a HTTP client for a Asset Connector connection from a given configuration." alt="" coords="5,5,244,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="278,28,244,28,244,23,278,23"/>
+</map>

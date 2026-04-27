@@ -1,0 +1,13 @@
+<map id="server_handler.ServerHandler.connect_to_server" name="server_handler.ServerHandler.connect_to_server">
+<area shape="rect" id="Node000001" title="Create AAS server clients for all configured AAS servers and the AAS registry." alt="" coords="5,69,275,109"/>
+<area shape="rect" id="Node000002" href="$classserver__handler_1_1ServerHandler.html#a7efd073d1e4b0de4fe12a88467ca3294" title="Create AAS registry client using the provided configuration." alt="" coords="323,5,541,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="232,67,327,46,328,51,233,72"/>
+<area shape="rect" id="Node000004" href="$classserver__handler_1_1ServerHandler.html#a553fa6cb84b32fef0e0def239c9ec796" title="Create AAS server wrappers for all configured AAS servers." alt="" coords="323,69,541,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="275,87,309,87,309,92,275,92"/>
+<area shape="rect" id="Node000005" href="$classserver__handler_1_1ServerHandler.html#a6ec1a897976a3bb751059450f8e9a7f0" title="Create Submodel registry client using the provided configuration." alt="" coords="323,133,541,173"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="233,107,328,128,327,133,232,112"/>
+<area shape="rect" id="Node000003" href="$namespaceserver__handler.html#ad86023eaf40d5b406d33423972e96bcc" title="Connect to the AAS server and create a server wrapper by a given configuration file." alt="" coords="589,69,763,109"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="510,43,587,63,586,68,508,48"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="542,87,576,87,576,92,542,92"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="508,131,586,110,587,115,510,136"/>
+</map>

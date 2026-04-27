@@ -1,0 +1,5 @@
+<map id="ms_data_mapping_processor.__main__.lifespan" name="ms_data_mapping_processor.__main__.lifespan">
+<area shape="rect" id="Node000001" title="Lifespan context manager for FastAPI application." alt="" coords="5,5,220,45"/>
+<area shape="rect" id="Node000002" href="$namespacems__data__mapping__processor_1_1____main____.html#a558d5befaaf3bb909bf617c9af45fda4" title="Background worker that periodically polls asset values." alt="" coords="268,5,483,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,23,254,23,254,28,220,28"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="submodels_endpoints._get_sme_value" name="submodels_endpoints._get_sme_value">
+<area shape="rect" id="Node000001" title=" " alt="" coords="267,41,435,81"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="391,30,377,23,351,20,328,22,314,27,309,33,312,40,306,42,304,32,311,22,327,17,351,15,378,18,393,25"/>
+<area shape="rect" id="Node000002" href="$namespacesubmodels__endpoints.html#aa1c91d5ed14b38b10e45e7065602d2a2" title="Returns the values of all submodel elements within a Submodel." alt="" coords="5,5,219,45"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="252,49,219,44,219,39,253,44"/>
+<area shape="rect" id="Node000003" href="$namespacesubmodels__endpoints.html#a680e555e46719a1aab9cbf00a238901a" title="Returns a specific submodel element from the Submodel at a specified path." alt="" coords="5,70,219,125"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="253,79,219,84,219,79,252,73"/>
+</map>

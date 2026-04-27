@@ -1,0 +1,11 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,109,100,134"/>
+<area shape="rect" id="Node000001" href="$classasset__connector__interface_1_1AssetConnectorClient.html" title="Represents a AssetConnectorClient to communicate with a Asset Connector REST API." alt="" coords="157,5,354,45"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="79,98,111,76,147,55,176,43,178,48,149,60,113,80,82,102"/>
+<area shape="rect" id="Node000002" href="$classconfiguration__models_1_1ServerConfiguration.html" title="Represents the HTTP server configuration." alt="" coords="151,69,359,109"/>
+<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="113,109,151,103,152,108,114,114"/>
+<area shape="rect" id="Node000003" href="$classconfiguration__models_1_1ServiceConfiguration.html" title="Represents the runtime configuration for the application." alt="" coords="148,133,363,173"/>
+<area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="114,128,148,134,147,139,113,134"/>
+<area shape="rect" id="Node000004" href="$classresponse__body__models_1_1AssetConnectorResponseBody.html" title=" " alt="" coords="148,197,363,237"/>
+<area shape="poly" id="edge4_Node000000_Node000004" title=" " alt="" coords="82,140,113,163,149,183,178,195,176,200,147,188,111,167,79,145"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="asset_connector_interface.AssetConnectorClient" name="asset_connector_interface.AssetConnectorClient">
+<area shape="rect" id="Node000001" title="Represents a AssetConnectorClient to communicate with a Asset Connector REST API." alt="" coords="7,93,205,133"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,100,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="68,41,97,92,93,94,64,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="125,5,197,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="149,44,119,95,115,92,145,41"/>
+</map>

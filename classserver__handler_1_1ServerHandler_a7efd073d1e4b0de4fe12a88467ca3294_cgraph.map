@@ -1,0 +1,5 @@
+<map id="server_handler.ServerHandler._connect_to_aas_registry" name="server_handler.ServerHandler._connect_to_aas_registry">
+<area shape="rect" id="Node000001" title="Create AAS registry client using the provided configuration." alt="" coords="5,5,224,45"/>
+<area shape="rect" id="Node000002" href="$namespaceserver__handler.html#ad86023eaf40d5b406d33423972e96bcc" title="Connect to the AAS server and create a server wrapper by a given configuration file." alt="" coords="272,5,445,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="224,23,258,23,258,28,224,28"/>
+</map>

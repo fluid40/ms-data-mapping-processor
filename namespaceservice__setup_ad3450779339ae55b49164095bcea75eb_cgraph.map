@@ -1,0 +1,13 @@
+<map id="service_setup.setup_service" name="service_setup.setup_service">
+<area shape="rect" id="Node000001" title="Setup the service states with the given configuration." alt="" coords="5,133,157,173"/>
+<area shape="rect" id="Node000002" href="$namespaceservice__setup.html#a78507819cf77e029a22cfe5779b344b3" title="Configure the Asset Connector with the provided AID submodels." alt="" coords="207,5,389,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,131,147,93,204,55,218,48,220,53,207,60,150,97,105,135"/>
+<area shape="rect" id="Node000003" href="$namespaceservice__setup.html#a04cbf054c6e92ca281e720c6ad5be7b4" title="Connect to the Asset Connector using the provided configuration." alt="" coords="211,69,385,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="149,131,216,111,218,116,151,136"/>
+<area shape="rect" id="Node000004" href="$namespaceservice__setup.html#acb23faa4e5bc51215f670446f7cb04fa" title=" " alt="" coords="226,133,370,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="158,151,212,151,212,156,158,156"/>
+<area shape="rect" id="Node000005" href="$namespaceservice__setup.html#a4c16fd5f2f1b4bd36fc8251ea7da13ed" title="Get the Asset Interface Mapping Configuration (AIMC) submodel from the AAS." alt="" coords="226,197,370,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="151,171,218,191,216,196,149,176"/>
+<area shape="rect" id="Node000006" href="$namespaceservice__setup.html#a5d7d2c8695cde31689f6f6e48fd3b130" title="Get the mapping configurations from the AIMC submodel." alt="" coords="205,261,391,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="105,171,150,209,207,247,220,254,218,258,204,252,147,213,102,175"/>
+</map>

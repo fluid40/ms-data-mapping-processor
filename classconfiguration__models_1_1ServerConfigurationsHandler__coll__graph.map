@@ -1,0 +1,7 @@
+<map id="configuration_models.ServerConfigurationsHandler" name="configuration_models.ServerConfigurationsHandler">
+<area shape="rect" id="Node000001" title="Handler for loading and managing server configurations." alt="" coords="5,212,213,252"/>
+<area shape="rect" id="Node000002" href="$classconfiguration__models_1_1ServerConfiguration.html" title="Represents the HTTP server configuration." alt="" coords="5,80,213,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,134,112,212,107,212,107,134"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="62,5,157,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="112,44,112,80,107,80,107,44"/>
+</map>

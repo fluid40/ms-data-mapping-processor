@@ -1,0 +1,6 @@
+<map id="submodels_endpoints.get_submodel_element_by_path_value_only_submodel_repo" name="submodels_endpoints.get_submodel_element_by_path_value_only_submodel_repo">
+<area shape="rect" id="Node000001" title="Returns a specific submodel element from the Submodel at a specified path." alt="" coords="5,22,219,77"/>
+<area shape="rect" id="Node000002" href="$namespacesubmodels__endpoints.html#af9e0e3c4c5260a25b0a4cbb458bb0ff8" title=" " alt="" coords="267,29,435,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,47,253,47,253,52,219,52"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="306,30,304,20,311,10,327,5,351,3,378,6,393,13,391,18,377,11,351,8,328,10,314,15,309,21,312,28"/>
+</map>

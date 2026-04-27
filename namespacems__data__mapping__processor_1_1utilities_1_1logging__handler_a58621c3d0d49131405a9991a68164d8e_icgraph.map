@@ -1,0 +1,7 @@
+<map id="ms_data_mapping_processor.utilities.logging_handler._handle_file_rotation" name="ms_data_mapping_processor.utilities.logging_handler._handle_file_rotation">
+<area shape="rect" id="Node000001" title=" " alt="" coords="733,5,1049,45"/>
+<area shape="rect" id="Node000002" href="$namespacems__data__mapping__processor_1_1utilities_1_1logging__handler.html#ab0dc01a90d465048cc17782169287a98" title="Set the log file." alt="" coords="369,5,685,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="720,28,685,28,685,23,720,23"/>
+<area shape="rect" id="Node000003" href="$namespacems__data__mapping__processor_1_1utilities_1_1logging__handler.html#ae660dead675c6fafed5f4b77fd03711c" title="Initialize the standard logging." alt="" coords="5,5,321,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="356,28,321,28,321,23,356,23"/>
+</map>

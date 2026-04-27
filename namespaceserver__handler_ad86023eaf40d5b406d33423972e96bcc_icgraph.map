@@ -1,0 +1,15 @@
+<map id="server_handler.connect_to_aas_server" name="server_handler.connect_to_aas_server">
+<area shape="rect" id="Node000001" title="Connect to the AAS server and create a server wrapper by a given configuration file." alt="" coords="609,101,783,141"/>
+<area shape="rect" id="Node000002" href="$classserver__handler_1_1ServerHandler.html#a7efd073d1e4b0de4fe12a88467ca3294" title="Create AAS registry client using the provided configuration." alt="" coords="333,5,551,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="644,98,560,60,524,48,526,43,562,55,647,93"/>
+<area shape="rect" id="Node000004" href="$classserver__handler_1_1ServerHandler.html#a553fa6cb84b32fef0e0def239c9ec796" title="Create AAS server wrappers for all configured AAS servers." alt="" coords="333,69,551,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="595,111,551,106,552,100,596,106"/>
+<area shape="rect" id="Node000005" href="$classserver__handler_1_1ServerHandler.html#a6ec1a897976a3bb751059450f8e9a7f0" title="Create Submodel registry client using the provided configuration." alt="" coords="333,133,551,173"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="596,137,552,142,551,137,595,131"/>
+<area shape="rect" id="Node000006" href="$classserver__handler_1_1ServerHandler.html#a35ce096d56366b8736a5cc17c6b241f5" title="Get or create an AAS server wrapper for the given base URL." alt="" coords="323,197,561,237"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="647,150,562,188,526,200,524,195,560,183,644,145"/>
+<area shape="rect" id="Node000003" href="$classserver__handler_1_1ServerHandler.html#af2e7256716a0fe4479b7c76f0d9707bd" title="Create AAS server clients for all configured AAS servers and the AAS registry." alt="" coords="5,69,275,109"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="334,51,235,72,234,67,333,46"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="319,92,275,92,275,87,319,87"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="333,133,234,112,235,107,334,128"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="service_process._update_target_property_with_payload" name="service_process._update_target_property_with_payload">
+<area shape="rect" id="Node000001" title="Write payload value to target property in submodel." alt="" coords="204,5,387,60"/>
+<area shape="rect" id="Node000002" href="$namespaceservice__process.html#af47d2716a4c6cafb2d580ecdcdd80d89" title="Get the values from mapping configurations relations from broker." alt="" coords="5,13,156,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,35,156,35,156,30,190,30"/>
+</map>

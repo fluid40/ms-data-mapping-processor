@@ -1,0 +1,5 @@
+<map id="server_handler.ServerHandler.get_or_create_repo_wrapper" name="server_handler.ServerHandler.get_or_create_repo_wrapper">
+<area shape="rect" id="Node000001" title="Get or create an AAS server wrapper for the given base URL." alt="" coords="5,5,244,45"/>
+<area shape="rect" id="Node000002" href="$namespaceserver__handler.html#ad86023eaf40d5b406d33423972e96bcc" title="Connect to the AAS server and create a server wrapper by a given configuration file." alt="" coords="292,5,465,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="244,23,278,23,278,28,244,28"/>
+</map>
