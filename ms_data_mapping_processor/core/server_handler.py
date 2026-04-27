@@ -3,7 +3,7 @@
 import logging
 import os
 
-from aas_http_client import AasHttpClient, SdkWrapper, create_wrapper_by_dict
+from aas_http_client import AasHttpClient, SdkWrapper, sdk_wrapper
 from fastapi import HTTPException
 
 from ms_data_mapping_processor.models.configuration_models import ServerConfiguration, ServerConfigurationsHandler
@@ -120,7 +120,7 @@ def connect_to_aas_server(server_configuration: dict, secret_var_name: str) -> S
     server_configuration["EncodedIds"] = False
 
     try:
-        wrapper: SdkWrapper | None = create_wrapper_by_dict(server_configuration, server_secret, server_secret, server_secret)
+        wrapper: SdkWrapper | None = sdk_wrapper.create_by_dict(server_configuration, server_secret, server_secret, server_secret)
     except Exception as ve:
         _logger.error(f"Could not create AAS server wrapper: {ve}")
         return None
