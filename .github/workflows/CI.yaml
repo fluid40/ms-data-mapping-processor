@@ -79,3 +79,11 @@ jobs:
           GIT_HASH=$(git rev-parse --short HEAD)
           echo "hash=$GIT_HASH" >> $GITHUB_OUTPUT
           echo "Extracted git hash: $GIT_HASH"
+
+      - name: Generate Changelog
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v4
+        with:
+          configuration: .github/changelog-config.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
