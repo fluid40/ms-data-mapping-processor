@@ -63,6 +63,9 @@ jobs:
         run: pytest -v tests/*.py
 
   docker-build:
+    name: Build and Push Docker Image
+    needs: [detect-project-changes, run-tests]
+    if: github.ref == 'refs/heads/main' && needs.detect-project-changes.outputs.changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -105,8 +108,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            engineeringmethodsag/fluid-ms-data-mapping-processor:${{ steps.get_version.outputs.version }}-${{ steps.get_version.outputs.hash }}
-            engineeringmethodsag/fluid-ms-data-mapping-processor:latest
+            engineeringmethodsag/ms-data-mapping-processor:${{ steps.get_version.outputs.version }}-${{ steps.get_version.outputs.hash }}
+            engineeringmethodsag/ms-data-mapping-processor:latest
 
   release-data:
     runs-on: ubuntu-latest
@@ -160,7 +163,7 @@ jobs:
             **Commit:** `${{ steps.get_version.outputs.hash }}`
 
             ### 🧩 Build Information
-            - Docker Image: [`engineeringmethodsag/fluid-ms-data-mapping-processor:latest`](https://hub.docker.com/repository/docker/engineeringmethodsag/fluid-ms-data-mapping-processor/tags/latest/sha256-db4aa2d0e0ce68ed4314b5a51e1941c4f712fa44c844479917f34bc007a3ba6a)
+            - Docker Image: [`engineeringmethodsag/ms-data-mapping-processor:latest`](https://hub.docker.com/repository/docker/engineeringmethodsag/ms-data-mapping-processor/general)
             - [Changelog](docs/CHANGELOG.md)
             - [Documentation](https://fluid40.github.io/aas-http-client/)
           files: dist/*

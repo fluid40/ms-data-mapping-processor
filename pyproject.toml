@@ -1,6 +1,6 @@
 [project]
 name = "ms-data-mapping-processor"
-version = "0.0.6"
+version = "0.0.7"
 description = "Microservice 'data mapping processor' for retrieving dynamic data from the asset connector and providing this data as a standard AAS structure."
 readme = "README.md"
 license = { file = "LICENSE" }
