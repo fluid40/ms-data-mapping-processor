@@ -81,6 +81,12 @@ jobs:
           echo "hash=$GIT_HASH" >> $GITHUB_OUTPUT
           echo "Extracted git hash: $GIT_HASH"
 
+      - name: Login Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Generate Changelog
         id: changelog
         uses: mikepenz/release-changelog-builder-action@v4
@@ -89,7 +95,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create Git tag if it doesn't exist
+      - name: Create Git Tag
         run: |
           VERSION_TAG="v${{ steps.get_version.outputs.version }}"
           if git rev-parse "$VERSION_TAG" >/dev/null 2>&1; then
