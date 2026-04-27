@@ -74,6 +74,8 @@ jobs:
         run: |
           VERSION=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
 
           GIT_HASH=$(git rev-parse --short HEAD)
           echo "hash=$GIT_HASH" >> $GITHUB_OUTPUT
+          echo "Extracted git hash: $GIT_HASH"
