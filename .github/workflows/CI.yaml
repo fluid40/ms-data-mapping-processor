@@ -112,6 +112,7 @@ jobs:
             engineeringmethodsag/ms-data-mapping-processor:latest
 
   release-data:
+    name: Create Release Data
     runs-on: ubuntu-latest
     needs: [docker-build]
 
