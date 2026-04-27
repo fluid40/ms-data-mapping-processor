@@ -80,10 +80,12 @@ jobs:
           echo "hash=$GIT_HASH" >> $GITHUB_OUTPUT
           echo "Extracted git hash: $GIT_HASH"
 
-      - name: Generate Changelog
-        id: changelog
-        uses: mikepenz/release-changelog-builder-action@v4
-        with:
-          configuration: .github/changelog-config.json
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Git tag if it doesn't exist
+        run: |
+          VERSION_TAG="v${{ steps.get_version.outputs.version }}"
+          if git rev-parse "$VERSION_TAG" >/dev/null 2>&1; then
+            echo "Tag $VERSION_TAG already exists."
+          else
+            git tag "$VERSION_TAG"
+            git push origin "$VERSION_TAG"
+          fi
