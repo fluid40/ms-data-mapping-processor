@@ -62,7 +62,7 @@ jobs:
       - name: Run tests
         run: pytest -v tests/*.py
 
-  docker-build-and-release:
+  docker-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -95,6 +95,37 @@ jobs:
         uses: docker/setup-buildx-action@v3
         with:
           driver: docker-container
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v5
+        env:
+          BUILDX_BUILDER: ${{ steps.buildx.outputs.name }}
+        with:
+          file: Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            engineeringmethodsag/fluid-ms-data-mapping-processor:${{ steps.get_version.outputs.version }}-${{ steps.get_version.outputs.hash }}
+            engineeringmethodsag/fluid-ms-data-mapping-processor:latest
+
+  release-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from pyproject.toml
+        id: get_version
+        run: |
+          VERSION=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
+
+          GIT_HASH=$(git rev-parse --short HEAD)
+          echo "hash=$GIT_HASH" >> $GITHUB_OUTPUT
+          echo "Extracted git hash: $GIT_HASH"
 
       - name: Generate Changelog
         id: changelog
