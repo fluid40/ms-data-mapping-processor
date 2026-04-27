@@ -1,0 +1,40 @@
+name: Build Release
+
+on:
+  push:
+    branches:
+      - "**"
+
+permissions:
+  contents: write
+
+jobs:
+  detect-project-changes:
+    name: Check for new version
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.check.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Check if pyproject.toml changed
+        id: check
+        run: |
+          if git rev-parse HEAD^ >/dev/null 2>&1; then
+            CHANGED_FILES="$(git diff --name-only HEAD^ HEAD)"
+          else
+            echo "No parent commit found, using full file list"
+            CHANGED_FILES="$(git ls-files)"
+          fi
+
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+
+          if echo "$CHANGED_FILES" | grep -q '^pyproject\.toml$'; then
+            echo "pyproject.toml changed, marking as changed"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "pyproject.toml not changed, skipping release"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
