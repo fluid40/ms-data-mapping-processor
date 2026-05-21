@@ -1,4 +1,4 @@
-# Changelog
+# 📝 Changelog
 
 ## [0.9.1] - 2026-04-17
 
