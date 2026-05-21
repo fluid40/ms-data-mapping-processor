@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['changelog_0',['Changelog',['../md_docs_2CHANGELOG.html',1,'']]],
+  ['changelog_0',['📝 Changelog',['../md_docs_2CHANGELOG.html',1,'']]],
   ['changelog_2emd_1',['CHANGELOG.md',['../CHANGELOG_8md.html',1,'']]],
   ['colorcodes_2',['ColorCodes',['../classms__data__mapping__processor_1_1utilities_1_1logging__handler_1_1ColorCodes.html',1,'ms_data_mapping_processor::utilities::logging_handler']]],
   ['compose_3',['5. Run with Docker Compose',['../md_docs_2docker-setup.html#autotoc_md8',1,'']]],

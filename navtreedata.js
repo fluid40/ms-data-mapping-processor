@@ -26,7 +26,7 @@ var NAVTREE =
 [
   [ "Data Mapping Processor Documentation", "index.html", [
     [ "Microservice: Data Mapping Processor", "index.html", "index" ],
-    [ "Changelog", "md_docs_2CHANGELOG.html", [
+    [ "📝 Changelog", "md_docs_2CHANGELOG.html", [
       [ "[0.9.1] - 2026-04-17", "md_docs_2CHANGELOG.html#autotoc_md1", null ]
     ] ],
     [ "🐳 Docker Setup", "md_docs_2docker-setup.html", [
