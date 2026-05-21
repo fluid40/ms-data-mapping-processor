@@ -98,6 +98,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <ul>
 <li>Microservice: Data Mapping Processor<ul>
 <li>🚀 Features</li>
+<li>📋 Prerequisites</li>
 <li>📚 Resources</li>
 </ul>
 </li>
@@ -114,6 +115,24 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </ul>
 <hr  />
 <h1><a class="anchor" id="autotoc_md6"></a>
+📋 Prerequisites</h1>
+<p>Before running this service, make sure the following requirements are met:</p>
+<ul>
+<li>Python 3.11 or newer</li>
+<li>Reachable AAS infrastructure services (AAS Registry, Submodel Registry, and at least one Repository server)</li>
+<li>A reachable <a href="https://github.com/fluid40/ms-asset-connector">Asset Connector</a> endpoint (for MQTT/OPC UA-backed data retrieval)</li>
+<li>Valid JSON configuration files under the <code>configuration/</code> folder, including:<ul>
+<li><code>configuration/service_config.json</code></li>
+<li><code>configuration/aas_registry/*.json</code></li>
+<li><code>configuration/submodel_registry/*.json</code></li>
+<li><code>configuration/asset_connector/*.json</code></li>
+</ul>
+</li>
+<li>An AAS containing an AIMC submodel (<code>/idta/AssetInterfacesMappingConfiguration</code>) and referenced AID submodels</li>
+<li>Optional for containerized deployment: Docker engine with network access to the required backend services</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md8"></a>
 📚 Resources</h1>
 <p>📘 <a href="https://fluid40.github.io/ms-data-mapping-processor/">Documentation</a></p>
 <p>📝 <a class="el" href="md_docs_2CHANGELOG.html">Changelog</a></p>

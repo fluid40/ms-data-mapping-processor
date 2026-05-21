@@ -5,11 +5,12 @@ var searchData=
   ['payloadvalue_2',['PayloadValue',['../classvalue__data__models_1_1PayloadValue.html',1,'value_data_models']]],
   ['polling_5finterval_3',['polling_interval',['../classconfiguration__models_1_1ServiceConfiguration.html#a669d1ed47103ffba58d228d09c230367',1,'configuration_models::ServiceConfiguration']]],
   ['port_4',['port',['../namespacems__data__mapping__processor_1_1____main____.html#acf2de3481ddb8a7eaf405a306a70cdb7',1,'ms_data_mapping_processor::__main__']]],
-  ['process_5fdata_5',['process_data',['../classprocess__models_1_1ServiceStates.html#a05e883c36d875121b896d3626b33b350',1,'process_models::ServiceStates']]],
-  ['process_5fmodels_6',['process_models',['../namespaceprocess__models.html',1,'']]],
-  ['process_5fmodels_2epy_7',['process_models.py',['../process__models_8py.html',1,'']]],
-  ['processdata_8',['ProcessData',['../classprocess__models_1_1ProcessData.html',1,'process_models']]],
-  ['processor_9',['Microservice: Data Mapping Processor',['../index.html',1,'']]],
-  ['property_5fname_10',['property_name',['../classvalue__data__models_1_1PayloadValue.html#ac4b688165e3d8b285a22523b217c61d6',1,'value_data_models.PayloadValue.property_name'],['../classvalue__data__models_1_1PayloadValue.html#a979c5877d33d2ae368bde9cf56e6c68a',1,'value_data_models.PayloadValue.property_name']]],
-  ['purple_11',['purple',['../classms__data__mapping__processor_1_1utilities_1_1logging__handler_1_1ColorCodes.html#a192372dfe6b26a42306f91c8f54ca4c9',1,'ms_data_mapping_processor::utilities::logging_handler::ColorCodes']]]
+  ['prerequisites_5',['📋 Prerequisites',['../index.html#autotoc_md6',1,'']]],
+  ['process_5fdata_6',['process_data',['../classprocess__models_1_1ServiceStates.html#a05e883c36d875121b896d3626b33b350',1,'process_models::ServiceStates']]],
+  ['process_5fmodels_7',['process_models',['../namespaceprocess__models.html',1,'']]],
+  ['process_5fmodels_2epy_8',['process_models.py',['../process__models_8py.html',1,'']]],
+  ['processdata_9',['ProcessData',['../classprocess__models_1_1ProcessData.html',1,'process_models']]],
+  ['processor_10',['Microservice: Data Mapping Processor',['../index.html',1,'']]],
+  ['property_5fname_11',['property_name',['../classvalue__data__models_1_1PayloadValue.html#ac4b688165e3d8b285a22523b217c61d6',1,'value_data_models.PayloadValue.property_name'],['../classvalue__data__models_1_1PayloadValue.html#a979c5877d33d2ae368bde9cf56e6c68a',1,'value_data_models.PayloadValue.property_name']]],
+  ['purple_12',['purple',['../classms__data__mapping__processor_1_1utilities_1_1logging__handler_1_1ColorCodes.html#a192372dfe6b26a42306f91c8f54ca4c9',1,'ms_data_mapping_processor::utilities::logging_handler::ColorCodes']]]
 ];
