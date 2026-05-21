@@ -166,7 +166,7 @@ jobs:
             ### 🧩 Build Information
             - Docker Image: [`engineeringmethodsag/ms-data-mapping-processor:latest`](https://hub.docker.com/repository/docker/engineeringmethodsag/ms-data-mapping-processor/general)
             - [Changelog](docs/CHANGELOG.md)
-            - [Documentation](https://fluid40.github.io/aas-http-client/)
+            - [Documentation](https://fluid40.github.io/ms-data-mapping-processor/)
           files: dist/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

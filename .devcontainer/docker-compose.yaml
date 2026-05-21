@@ -15,7 +15,7 @@ services:
 
   aas-registry:
     image: eclipsebasyx/aas-registry-log-mongodb:2.0.0-SNAPSHOT
-    container_name: aas-registry
+    container_name: aas-registry-ms
     environment:
       - SERVER_PORT=8080
     volumes:
@@ -31,7 +31,7 @@ services:
 
   sm-registry:
     image: eclipsebasyx/submodel-registry-log-mongodb:2.0.0-SNAPSHOT
-    container_name: sm-registry
+    container_name: sm-registry-ms
     environment:
       - SERVER_PORT=8080
     volumes:
@@ -47,7 +47,7 @@ services:
 
   java_aas_server:
     image: eclipsebasyx/aas-environment:2.0.0-SNAPSHOT
-    container_name: aas-server
+    container_name: aas-server-ms
     ports:
       - "8075:8075"
     environment:
@@ -68,7 +68,7 @@ services:
 
   aas-web-ui:
     image: eclipsebasyx/aas-gui:SNAPSHOT
-    container_name: aas-web-ui
+    container_name: aas-web-ui-ms
     ports:
       - "8078:3000"
     environment:
@@ -91,7 +91,7 @@ services:
 
   mongo:
     image: mongo:4.4
-    container_name: mongo
+    container_name: mongo-ms
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongoAdmin
       MONGO_INITDB_ROOT_PASSWORD: mongoPassword
