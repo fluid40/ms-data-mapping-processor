@@ -2,6 +2,18 @@
 
 This guide explains how to run ms-data-mapping-processor in Docker.
 
+**Table of Contents:**
+
+- [🐳 Docker Setup](#-docker-setup)
+  - [Prerequisites](#prerequisites)
+  - [Prepare Configuration](#prepare-configuration)
+  - [Option A: Pull Prebuilt Image](#option-a-pull-prebuilt-image)
+  - [Option B: Build Image Locally](#option-b-build-image-locally)
+  - [Run Container (docker run)](#run-container-docker-run)
+  - [Run with Docker Compose](#run-with-docker-compose)
+  - [Verify the Service](#verify-the-service)
+  - [Troubleshooting](#troubleshooting)
+
 ## Prerequisites
 
 * Docker Engine 24+ with Docker Compose plugin
@@ -12,7 +24,7 @@ This guide explains how to run ms-data-mapping-processor in Docker.
   + Asset Connector service
 * Valid configuration files in the project `configuration/` directory
 
-## 1. Prepare Configuration
+## Prepare Configuration
 
 The container reads runtime configuration from the `configuration/` directory (default path inside the container).
 
@@ -30,13 +42,13 @@ Notes:
 * Set `CONFIG_FILE_NAME` to use a different runtime config filename.
 * If repository configs require secrets (`SecretVarName`), pass matching environment variables to the container.
 
-## 2. Option A: Pull Prebuilt Image
+## Option A: Pull Prebuilt Image
 
 ```bash
 docker pull engineeringmethodsag/ms-data-mapping-processor:latest
 ```
 
-## 3. Option B: Build Image Locally
+## Option B: Build Image Locally
 
 From the repository root:
 
@@ -44,7 +56,7 @@ From the repository root:
 docker build -t ms-data-mapping-processor:local .
 ```
 
-## 4. Run Container (docker run)
+## Run Container (docker run)
 
 Example using the local build tag:
 
@@ -67,7 +79,7 @@ If you use the published image, replace the last line with:
 engineeringmethodsag/ms-data-mapping-processor:latest
 ```
 
-## 5. Run with Docker Compose
+## Run with Docker Compose
 
 Create `docker-compose.yml` :
 
@@ -99,7 +111,7 @@ Stop:
 docker compose down
 ```
 
-## 6. Verify the Service
+## Verify the Service
 
 Check health endpoint:
 

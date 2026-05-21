@@ -2,9 +2,11 @@
 
 ## [0.9.1] - 2026-04-17
 
-* ✨Feature: Initial implementation
+* ✨Feat: Initial implementation
 
-* ✨Feature
-* 🐛Bugfix
-* 📝Documentation
-* ♻️Refactor
+* ✨Feat        - Feature
+* 🐛Fix         - Bugfix
+* 📝Doc         - Documentation
+* ♻️Refactor    - Refactor
+* 🧹Chore       - Chore
+* 🚀Improvement - Improvement
