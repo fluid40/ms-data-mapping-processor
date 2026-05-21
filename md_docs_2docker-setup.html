@@ -92,8 +92,22 @@ $(document).ready(function(){initNavTree('md_docs_2docker-setup.html',''); initR
   <div class="headertitle"><div class="title">🐳 Docker Setup</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md2"></a> This guide explains how to run ms-data-mapping-processor in Docker.</p>
-<h1><a class="anchor" id="autotoc_md3"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md15"></a> This guide explains how to run ms-data-mapping-processor in Docker.</p>
+<p><b>Table of Contents:</b></p>
+<ul>
+<li>🐳 Docker Setup<ul>
+<li>Prerequisites</li>
+<li>Prepare Configuration</li>
+<li>Option A: Pull Prebuilt Image</li>
+<li>Option B: Build Image Locally</li>
+<li>Run Container (docker run)</li>
+<li>Run with Docker Compose</li>
+<li>Verify the Service</li>
+<li>Troubleshooting</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md16"></a>
 Prerequisites</h1>
 <ul>
 <li>Docker Engine 24+ with Docker Compose plugin</li>
@@ -106,8 +120,8 @@ Prerequisites</h1>
 </li>
 <li>Valid configuration files in the project <code>configuration/</code> directory</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md4"></a>
-1. Prepare Configuration</h1>
+<h1><a class="anchor" id="autotoc_md17"></a>
+Prepare Configuration</h1>
 <p>The container reads runtime configuration from the <code>configuration/</code> directory (default path inside the container).</p>
 <p>Required files and folders:</p>
 <ul>
@@ -123,15 +137,15 @@ Prerequisites</h1>
 <li>Set <code>CONFIG_FILE_NAME</code> to use a different runtime config filename.</li>
 <li>If repository configs require secrets (<code>SecretVarName</code>), pass matching environment variables to the container.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md5"></a>
-2. Option A: Pull Prebuilt Image</h1>
+<h1><a class="anchor" id="autotoc_md18"></a>
+Option A: Pull Prebuilt Image</h1>
 <div class="fragment"><div class="line">docker pull engineeringmethodsag/ms-data-mapping-processor:latest</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
-3. Option B: Build Image Locally</h1>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md19"></a>
+Option B: Build Image Locally</h1>
 <p>From the repository root:</p>
 <div class="fragment"><div class="line">docker build -t ms-data-mapping-processor:local .</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
-4. Run Container (docker run)</h1>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md20"></a>
+Run Container (docker run)</h1>
 <p>Example using the local build tag:</p>
 <div class="fragment"><div class="line">docker run --rm \</div>
 <div class="line">    --name ms-data-mapping-processor \</div>
@@ -145,8 +159,8 @@ Prerequisites</h1>
 <div class="line">    ms-data-mapping-processor:local</div>
 </div><!-- fragment --><p>If you use the published image, replace the last line with:</p>
 <div class="fragment"><div class="line">engineeringmethodsag/ms-data-mapping-processor:latest</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md8"></a>
-5. Run with Docker Compose</h1>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md21"></a>
+Run with Docker Compose</h1>
 <p>Create <code>docker-compose.yml</code> :</p>
 <div class="fragment"><div class="line">services:</div>
 <div class="line">  ms-data-mapping-processor:</div>
@@ -165,8 +179,8 @@ Prerequisites</h1>
 <div class="fragment"><div class="line">docker compose up -d</div>
 </div><!-- fragment --><p>Stop:</p>
 <div class="fragment"><div class="line">docker compose down</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md9"></a>
-6. Verify the Service</h1>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md22"></a>
+Verify the Service</h1>
 <p>Check health endpoint:</p>
 <div class="fragment"><div class="line">curl -s http://localhost:3088/health</div>
 </div><!-- fragment --><p>Check root endpoint:</p>
@@ -175,7 +189,7 @@ Prerequisites</h1>
 <ul>
 <li><code><a href="http://localhost:3088/docs">http://localhost:3088/docs</a></code></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md10"></a>
+<h1><a class="anchor" id="autotoc_md23"></a>
 Troubleshooting</h1>
 <ul>
 <li>Startup fails with configuration errors:<ul>

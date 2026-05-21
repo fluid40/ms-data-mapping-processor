@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['3_20option_20b_3a_20build_20image_20locally_0',['3. Option B: Build Image Locally',['../md_docs_2docker-setup.html#autotoc_md6',1,'']]]
+  ['9_201_202026_2004_2017_0',['[0.9.1] - 2026-04-17',['../md_docs_2CHANGELOG.html#autotoc_md1',1,'']]]
 ];

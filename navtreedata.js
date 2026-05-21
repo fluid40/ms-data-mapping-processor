@@ -29,15 +29,28 @@ var NAVTREE =
     [ "📝 Changelog", "md_docs_2CHANGELOG.html", [
       [ "[0.9.1] - 2026-04-17", "md_docs_2CHANGELOG.html#autotoc_md1", null ]
     ] ],
+    [ "🛠️ Configuration Guide", "md_docs_2configuration.html", [
+      [ "Overview", "md_docs_2configuration.html#autotoc_md3", null ],
+      [ "Required Folder Structure", "md_docs_2configuration.html#autotoc_md4", null ],
+      [ "Runtime Service Configuration", "md_docs_2configuration.html#autotoc_md5", null ],
+      [ "Asset Connector Configuration", "md_docs_2configuration.html#autotoc_md6", null ],
+      [ "AAS Registry Configuration", "md_docs_2configuration.html#autotoc_md8", null ],
+      [ "Submodel Registry Configuration", "md_docs_2configuration.html#autotoc_md9", null ],
+      [ "Repository Server Configuration", "md_docs_2configuration.html#autotoc_md10", null ],
+      [ "Environment Variables", "md_docs_2configuration.html#autotoc_md11", null ],
+      [ "How SecretVarName Works", "md_docs_2configuration.html#autotoc_md12", null ],
+      [ "Validation Checklist", "md_docs_2configuration.html#autotoc_md13", null ],
+      [ "Typical Startup Errors", "md_docs_2configuration.html#autotoc_md14", null ]
+    ] ],
     [ "🐳 Docker Setup", "md_docs_2docker-setup.html", [
-      [ "Prerequisites", "md_docs_2docker-setup.html#autotoc_md3", null ],
-      [ "1. Prepare Configuration", "md_docs_2docker-setup.html#autotoc_md4", null ],
-      [ "2. Option A: Pull Prebuilt Image", "md_docs_2docker-setup.html#autotoc_md5", null ],
-      [ "3. Option B: Build Image Locally", "md_docs_2docker-setup.html#autotoc_md6", null ],
-      [ "4. Run Container (docker run)", "md_docs_2docker-setup.html#autotoc_md7", null ],
-      [ "5. Run with Docker Compose", "md_docs_2docker-setup.html#autotoc_md8", null ],
-      [ "6. Verify the Service", "md_docs_2docker-setup.html#autotoc_md9", null ],
-      [ "Troubleshooting", "md_docs_2docker-setup.html#autotoc_md10", null ]
+      [ "Prerequisites", "md_docs_2docker-setup.html#autotoc_md16", null ],
+      [ "Prepare Configuration", "md_docs_2docker-setup.html#autotoc_md17", null ],
+      [ "Option A: Pull Prebuilt Image", "md_docs_2docker-setup.html#autotoc_md18", null ],
+      [ "Option B: Build Image Locally", "md_docs_2docker-setup.html#autotoc_md19", null ],
+      [ "Run Container (docker run)", "md_docs_2docker-setup.html#autotoc_md20", null ],
+      [ "Run with Docker Compose", "md_docs_2docker-setup.html#autotoc_md21", null ],
+      [ "Verify the Service", "md_docs_2docker-setup.html#autotoc_md22", null ],
+      [ "Troubleshooting", "md_docs_2docker-setup.html#autotoc_md23", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -66,7 +79,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____main_____8py.html",
-"namespacems__data__mapping__processor_1_1utilities_1_1logging__handler.html#a58621c3d0d49131405a9991a68164d8e"
+"namespacems__data__mapping__processor_1_1____main____.html#a49af7d2eb5c08b89642d7eeacfdddd01"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

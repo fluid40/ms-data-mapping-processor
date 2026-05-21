@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['host_0',['host',['../namespacems__data__mapping__processor_1_1____main____.html#a6d124cc851da92a4bbd23a6c80a5a390',1,'ms_data_mapping_processor::__main__']]]
+  ['option_20a_3a_20pull_20prebuilt_20image_0',['Option A: Pull Prebuilt Image',['../md_docs_2docker-setup.html#autotoc_md18',1,'']]],
+  ['option_20b_3a_20build_20image_20locally_1',['Option B: Build Image Locally',['../md_docs_2docker-setup.html#autotoc_md19',1,'']]],
+  ['overview_2',['Overview',['../md_docs_2configuration.html#autotoc_md3',1,'']]]
 ];

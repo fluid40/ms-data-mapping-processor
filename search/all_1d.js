@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['📋_20prerequisites_0',['📋 Prerequisites',['../index.html#autotoc_md15',1,'']]]
+  ['🚀_20features_0',['🚀 Features',['../index.html#autotoc_md27',1,'']]]
 ];
