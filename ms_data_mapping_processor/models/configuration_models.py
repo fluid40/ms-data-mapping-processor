@@ -193,12 +193,12 @@ class ServerConfigurationsHandler:
             _logger.info(f"No AAS repository configuration files found in folder '{config_path}'.")
             return
 
-        for json_file in json_files:
-            try:
+        try:
+            for json_file in json_files:
                 aas_server_configuration = ServerConfiguration.model_validate_json(json_file.read_text())
                 self.repo_server_configurations.append(aas_server_configuration)
-            except ValidationError as ve:
-                _logger.error(f"Invalid AAS repository connection file '{json_file}': {ve}")
+        except ValidationError as ve:
+            _logger.error(f"Invalid AAS repository connection file '{json_file}': {ve}")
 
         _logger.debug(f"Found {len(self.repo_server_configurations)} AAS repository configuration files in folder '{config_path}'.")
 
