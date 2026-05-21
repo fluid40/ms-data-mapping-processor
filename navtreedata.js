@@ -26,6 +26,9 @@ var NAVTREE =
 [
   [ "Data Mapping Processor Documentation", "index.html", [
     [ "Microservice: Data Mapping Processor", "index.html", "index" ],
+    [ "Changelog", "md_docs_2CHANGELOG.html", [
+      [ "[0.9.1] - 2026-04-17", "md_docs_2CHANGELOG.html#autotoc_md1", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -53,7 +56,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____main_____8py.html",
-"namespaceservice__process.html#a8594eb5a287334907d2da082e9f14f3c"
+"namespaceservice__process.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
