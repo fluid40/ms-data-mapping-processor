@@ -308,12 +308,12 @@ $(document).ready(function(){initNavTree('configuration__models_8py_source.html'
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>            _logger.info(f<span class="stringliteral">&quot;No AAS repository configuration files found in folder &#39;{config_path}&#39;.&quot;</span>)</div>
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>            <span class="keywordflow">return</span></div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        <span class="keywordflow">for</span> json_file <span class="keywordflow">in</span> json_files:</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            <span class="keywordflow">for</span> json_file <span class="keywordflow">in</span> json_files:</div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                aas_server_configuration = ServerConfiguration.model_validate_json(json_file.read_text())</div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>                self.<a class="code hl_variable" href="classconfiguration__models_1_1ServerConfigurationsHandler.html#a7f300076c2ba2f23c35606d9a962f37f">repo_server_configurations</a><a class="code hl_variable" href="classconfiguration__models_1_1ServerConfigurationsHandler.html#a40e3082d49a25ce5d0ade4dd6f4a2f08">repo_server_configurations</a>.append(aas_server_configuration)</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>            <span class="keywordflow">except</span> ValidationError <span class="keyword">as</span> ve:</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>                _logger.error(f<span class="stringliteral">&quot;Invalid AAS repository connection file &#39;{json_file}&#39;: {ve}&quot;</span>)</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        <span class="keywordflow">except</span> ValidationError <span class="keyword">as</span> ve:</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>            _logger.error(f<span class="stringliteral">&quot;Invalid AAS repository connection file &#39;{json_file}&#39;: {ve}&quot;</span>)</div>
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        _logger.debug(f<span class="stringliteral">&quot;Found {len(self.repo_server_configurations)} AAS repository configuration files in folder &#39;{config_path}&#39;.&quot;</span>)</div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
