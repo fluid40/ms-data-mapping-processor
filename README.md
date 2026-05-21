@@ -10,6 +10,7 @@ This microservice transforms incoming asset data into structured AAS-compatible 
 
 - [Microservice: Data Mapping Processor](#microservice-data-mapping-processor)
   - [🚀 Features](#-features)
+  - [📋 Prerequisites](#-prerequisites)
   - [📚 Resources](#-resources)
 
 ---
@@ -21,6 +22,23 @@ This microservice transforms incoming asset data into structured AAS-compatible 
 * ✅ Automatic retrieval of required submodels through registry and repository integration
 * ✅ Lightweight HTTP endpoints for processing, normalization, and integration into data pipelines
 * ✅ Container-ready deployment via Docker image with CI-backed project workflow
+
+---
+
+## 📋 Prerequisites
+
+Before running this service, make sure the following requirements are met:
+
+* Python 3.11 or newer
+* Reachable AAS infrastructure services (AAS Registry, Submodel Registry, and at least one Repository server)
+* A reachable [Asset Connector](https://github.com/fluid40/ms-asset-connector) endpoint (for MQTT/OPC UA-backed data retrieval)
+* Valid JSON configuration files under the `configuration/` folder, including:
+  + `configuration/service_config.json`
+  + `configuration/aas_registry/*.json`
+  + `configuration/submodel_registry/*.json`
+  + `configuration/asset_connector/*.json`
+* An AAS containing an AIMC submodel (`/idta/AssetInterfacesMappingConfiguration`) and referenced AID submodels
+* Optional for containerized deployment: Docker engine with network access to the required backend services
 
 ---
 
