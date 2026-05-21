@@ -29,6 +29,16 @@ var NAVTREE =
     [ "Changelog", "md_docs_2CHANGELOG.html", [
       [ "[0.9.1] - 2026-04-17", "md_docs_2CHANGELOG.html#autotoc_md1", null ]
     ] ],
+    [ "🐳 Docker Setup", "md_docs_2docker-setup.html", [
+      [ "Prerequisites", "md_docs_2docker-setup.html#autotoc_md3", null ],
+      [ "1. Prepare Configuration", "md_docs_2docker-setup.html#autotoc_md4", null ],
+      [ "2. Option A: Pull Prebuilt Image", "md_docs_2docker-setup.html#autotoc_md5", null ],
+      [ "3. Option B: Build Image Locally", "md_docs_2docker-setup.html#autotoc_md6", null ],
+      [ "4. Run Container (docker run)", "md_docs_2docker-setup.html#autotoc_md7", null ],
+      [ "5. Run with Docker Compose", "md_docs_2docker-setup.html#autotoc_md8", null ],
+      [ "6. Verify the Service", "md_docs_2docker-setup.html#autotoc_md9", null ],
+      [ "Troubleshooting", "md_docs_2docker-setup.html#autotoc_md10", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -56,7 +66,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____main_____8py.html",
-"namespaceserver__handler.html#ad86023eaf40d5b406d33423972e96bcc"
+"namespacems__data__mapping__processor_1_1utilities_1_1logging__handler.html#a58621c3d0d49131405a9991a68164d8e"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
