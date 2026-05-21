@@ -24,7 +24,8 @@ var searchData=
   ['status_5fcode_21',['status_code',['../classresponse__body__models_1_1AssetConnectorResponseBody.html#a168089dabc48e41389696ffe2860e891',1,'response_body_models.AssetConnectorResponseBody.status_code'],['../classresponse__body__models_1_1AssetConnectorResponseBody.html#a68245b1e55e328a6c0cebf90324d6c6e',1,'response_body_models.AssetConnectorResponseBody.status_code']]],
   ['statuscode_22',['StatusCode',['../classconstants_1_1StatusCode.html',1,'constants']]],
   ['submodel_5fid_23',['submodel_id',['../classprocess__models_1_1DescriptorMapping.html#a7bf86f26b5596e2ae529e04f1540d056',1,'process_models::DescriptorMapping']]],
-  ['submodels_5fendpoints_24',['submodels_endpoints',['../namespacesubmodels__endpoints.html',1,'']]],
-  ['submodels_5fendpoints_2epy_25',['submodels_endpoints.py',['../submodels__endpoints_8py.html',1,'']]],
-  ['success_26',['SUCCESS',['../classconstants_1_1StatusCode.html#a18514e83e1e51379dd181e37dadf086b',1,'constants::StatusCode']]]
+  ['submodels_24',['Using AID and AIMC Submodels',['../index.html#autotoc_md4',1,'']]],
+  ['submodels_5fendpoints_25',['submodels_endpoints',['../namespacesubmodels__endpoints.html',1,'']]],
+  ['submodels_5fendpoints_2epy_26',['submodels_endpoints.py',['../submodels__endpoints_8py.html',1,'']]],
+  ['success_27',['SUCCESS',['../classconstants_1_1StatusCode.html#a18514e83e1e51379dd181e37dadf086b',1,'constants::StatusCode']]]
 ];
