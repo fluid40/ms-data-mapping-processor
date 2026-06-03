@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('md_docs_2configuration.html',''); init
   <div class="headertitle"><div class="title">🛠️ Configuration Guide</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md2"></a> This guide explains how to configure ms-data-mapping-processor for local and containerized deployments.</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md3"></a> This guide explains how to configure ms-data-mapping-processor for local and containerized deployments.</p>
 <p><b>Table of Contents:</b></p>
 <ul>
 <li>🛠️ Configuration Guide<ul>
@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('md_docs_2configuration.html',''); init
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3"></a>
+<h1><a class="anchor" id="autotoc_md4"></a>
 Overview</h1>
 <p>At startup, the service loads runtime settings and connection profiles from the configuration folder.</p>
 <p>Default configuration base path:</p>
@@ -122,7 +122,7 @@ Overview</h1>
 <li>By default, the service loads service_config.json.</li>
 <li>You can override this with environment variable CONFIG_FILE_NAME.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md5"></a>
 Required Folder Structure</h1>
 <p>The following structure is expected:</p>
 <div class="fragment"><div class="line">configuration/</div>
@@ -147,7 +147,7 @@ Required Folder Structure</h1>
 <ul>
 <li>one or more files in repo_server/</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md5"></a>
+<h1><a class="anchor" id="autotoc_md6"></a>
 Runtime Service Configuration</h1>
 <p>File:</p>
 <ul>
@@ -169,7 +169,7 @@ Runtime Service Configuration</h1>
 <li>ExternalUrl: Public base URL used by the service when exposing descriptor links.</li>
 <li>ExternalPort: Optional public port used together with ExternalUrl, if needed</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md6"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Asset Connector Configuration</h1>
 <p>Folder:</p>
 <ul>
@@ -195,7 +195,7 @@ Asset Connector Configuration</h1>
 <ul>
 <li>A detailed introduction to server configuration options is available in the aas-http-client documentation: <a href="https://fluid40.github.io/aas-http-client/md_docs_2configuration.html">https://fluid40.github.io/aas-http-client/md_docs_2configuration.html</a></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md8"></a>
+<h1><a class="anchor" id="autotoc_md9"></a>
 AAS Registry Configuration</h1>
 <p>Folder:</p>
 <ul>
@@ -219,7 +219,7 @@ AAS Registry Configuration</h1>
 <li>If multiple files exist, the first discovered JSON file is used.</li>
 <li>SecretVarName is optional and can be empty when no auth secret is needed.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md9"></a>
+<h1><a class="anchor" id="autotoc_md10"></a>
 Submodel Registry Configuration</h1>
 <p>Folder:</p>
 <ul>
@@ -242,7 +242,7 @@ Submodel Registry Configuration</h1>
 <ul>
 <li>If multiple files exist, the first discovered JSON file is used.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md10"></a>
+<h1><a class="anchor" id="autotoc_md11"></a>
 Repository Server Configuration</h1>
 <p>Folder:</p>
 <ul>
@@ -292,7 +292,7 @@ Repository Server Configuration</h1>
 <li>If SecretVarName is set, the environment variable with that exact name must be available at runtime.</li>
 <li>The secret value is read from environment and used as password/client secret depending on auth mode.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md11"></a>
+<h1><a class="anchor" id="autotoc_md12"></a>
 Environment Variables</h1>
 <p>Common variables:</p>
 <ul>
@@ -306,7 +306,7 @@ Environment Variables</h1>
 <li>Any variable referenced by SecretVarName in repository config files.</li>
 <li>Examples from current templates: IQSTRUCT_AAS_SERVER_SECRET, HACK_AAS_SERVER_SECRET.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md12"></a>
+<h1><a class="anchor" id="autotoc_md13"></a>
 How SecretVarName Works</h1>
 <p><code>SecretVarName</code> defines the name of an environment variable that contains a secret used for server authentication.</p>
 <p>Short flow:</p>
@@ -316,7 +316,7 @@ How SecretVarName Works</h1>
 <li>The value is forwarded to the configured auth method (for example OAuth client secret or BasicAuth password).</li>
 </ul>
 <p>If <code>SecretVarName</code> is empty, no secret variable lookup is performed for that config file.</p>
-<h1><a class="anchor" id="autotoc_md13"></a>
+<h1><a class="anchor" id="autotoc_md14"></a>
 Validation Checklist</h1>
 <p>Before starting the service, verify:</p>
 <ul>
@@ -326,7 +326,7 @@ Validation Checklist</h1>
 <li>The target AAS provides AIMC and referenced AID submodels.</li>
 <li>Required secrets are present in environment variables.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md14"></a>
+<h1><a class="anchor" id="autotoc_md15"></a>
 Typical Startup Errors</h1>
 <p>Configuration base path not found:</p>
 <ul>

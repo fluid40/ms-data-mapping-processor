@@ -27,30 +27,31 @@ var NAVTREE =
   [ "Data Mapping Processor Documentation", "index.html", [
     [ "Microservice: Data Mapping Processor", "index.html", "index" ],
     [ "📝 Changelog", "md_docs_2CHANGELOG.html", [
-      [ "[0.9.1] - 2026-04-17", "md_docs_2CHANGELOG.html#autotoc_md1", null ]
+      [ "[0.9.2] - 2026-06-03", "md_docs_2CHANGELOG.html#autotoc_md1", null ],
+      [ "[0.9.1] - 2026-04-17", "md_docs_2CHANGELOG.html#autotoc_md2", null ]
     ] ],
     [ "🛠️ Configuration Guide", "md_docs_2configuration.html", [
-      [ "Overview", "md_docs_2configuration.html#autotoc_md3", null ],
-      [ "Required Folder Structure", "md_docs_2configuration.html#autotoc_md4", null ],
-      [ "Runtime Service Configuration", "md_docs_2configuration.html#autotoc_md5", null ],
-      [ "Asset Connector Configuration", "md_docs_2configuration.html#autotoc_md6", null ],
-      [ "AAS Registry Configuration", "md_docs_2configuration.html#autotoc_md8", null ],
-      [ "Submodel Registry Configuration", "md_docs_2configuration.html#autotoc_md9", null ],
-      [ "Repository Server Configuration", "md_docs_2configuration.html#autotoc_md10", null ],
-      [ "Environment Variables", "md_docs_2configuration.html#autotoc_md11", null ],
-      [ "How SecretVarName Works", "md_docs_2configuration.html#autotoc_md12", null ],
-      [ "Validation Checklist", "md_docs_2configuration.html#autotoc_md13", null ],
-      [ "Typical Startup Errors", "md_docs_2configuration.html#autotoc_md14", null ]
+      [ "Overview", "md_docs_2configuration.html#autotoc_md4", null ],
+      [ "Required Folder Structure", "md_docs_2configuration.html#autotoc_md5", null ],
+      [ "Runtime Service Configuration", "md_docs_2configuration.html#autotoc_md6", null ],
+      [ "Asset Connector Configuration", "md_docs_2configuration.html#autotoc_md7", null ],
+      [ "AAS Registry Configuration", "md_docs_2configuration.html#autotoc_md9", null ],
+      [ "Submodel Registry Configuration", "md_docs_2configuration.html#autotoc_md10", null ],
+      [ "Repository Server Configuration", "md_docs_2configuration.html#autotoc_md11", null ],
+      [ "Environment Variables", "md_docs_2configuration.html#autotoc_md12", null ],
+      [ "How SecretVarName Works", "md_docs_2configuration.html#autotoc_md13", null ],
+      [ "Validation Checklist", "md_docs_2configuration.html#autotoc_md14", null ],
+      [ "Typical Startup Errors", "md_docs_2configuration.html#autotoc_md15", null ]
     ] ],
     [ "🐳 Docker Setup", "md_docs_2docker-setup.html", [
-      [ "Prerequisites", "md_docs_2docker-setup.html#autotoc_md16", null ],
-      [ "Prepare Configuration", "md_docs_2docker-setup.html#autotoc_md17", null ],
-      [ "Option A: Pull Prebuilt Image", "md_docs_2docker-setup.html#autotoc_md18", null ],
-      [ "Option B: Build Image Locally", "md_docs_2docker-setup.html#autotoc_md19", null ],
-      [ "Run Container (docker run)", "md_docs_2docker-setup.html#autotoc_md20", null ],
-      [ "Run with Docker Compose", "md_docs_2docker-setup.html#autotoc_md21", null ],
-      [ "Verify the Service", "md_docs_2docker-setup.html#autotoc_md22", null ],
-      [ "Troubleshooting", "md_docs_2docker-setup.html#autotoc_md23", null ]
+      [ "Prerequisites", "md_docs_2docker-setup.html#autotoc_md17", null ],
+      [ "Prepare Configuration", "md_docs_2docker-setup.html#autotoc_md18", null ],
+      [ "Option A: Pull Prebuilt Image", "md_docs_2docker-setup.html#autotoc_md19", null ],
+      [ "Option B: Build Image Locally", "md_docs_2docker-setup.html#autotoc_md20", null ],
+      [ "Run Container (docker run)", "md_docs_2docker-setup.html#autotoc_md21", null ],
+      [ "Run with Docker Compose", "md_docs_2docker-setup.html#autotoc_md22", null ],
+      [ "Verify the Service", "md_docs_2docker-setup.html#autotoc_md23", null ],
+      [ "Troubleshooting", "md_docs_2docker-setup.html#autotoc_md24", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -79,7 +80,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____main_____8py.html",
-"namespacems__data__mapping__processor_1_1____main____.html#a49af7d2eb5c08b89642d7eeacfdddd01"
+"namespacems__data__mapping__processor_1_1____main____.html#a48d1bac333862b728b7fbb259c518d22"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
