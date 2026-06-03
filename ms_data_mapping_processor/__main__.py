@@ -1,6 +1,4 @@
-"""
-Main entry point for the microservice HTTP server.
-"""
+"""Main entry point for the microservice HTTP server."""
 
 import asyncio
 import logging
@@ -9,6 +7,7 @@ from contextlib import asynccontextmanager, suppress
 from pathlib import Path
 
 import uvicorn
+from aas_standard_parser import descriptor_json_helper
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_health import health
@@ -119,7 +118,8 @@ async def lifespan(app: FastAPI):
         else:
             # reset all changed descriptors to old href on registry server
             for mapping in service_states.descriptor_mapping:
-                _logger.info(f"Reset descriptor for submodel '{mapping.submodel_id}' to original href'")
+                href = descriptor_json_helper.get_endpoint_href_by_index(mapping.master_descriptor, 0)
+                _logger.info(f"Reset descriptor for submodel '{mapping.submodel_id}' to original href '{href}'")
                 # update 'slave' descriptor with old href on registry server
                 service_states.server_handler.sm_registry_client.submodel_registry.put_submodel_descriptor_by_id(
                     mapping.submodel_id, mapping.master_descriptor
