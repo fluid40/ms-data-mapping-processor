@@ -113,13 +113,17 @@ async def lifespan(app: FastAPI):
                 _logger.debug("Worker task cancelled during shutdown")
 
         _logger.info("Reset submodel descriptors on registry server to original hrefs")
-        # reset all changed descriptors to old href on registry server
-        for mapping in service_states.descriptor_mapping:
-            _logger.debug(f"Reset descriptor for submodel '{mapping.submodel_id}' to original href'")
-            # update 'slave' descriptor with old href on registry server
-            service_states.server_handler.sm_registry_client.submodel_registry.put_submodel_descriptor_by_id(
-                mapping.submodel_id, mapping.master_descriptor
-            )
+
+        if service_states.server_handler.sm_registry_client is None or service_states.descriptor_mapping is None:
+            _logger.info("Registry client or descriptor mapping not available during shutdown, skipping descriptor reset")
+        else:
+            # reset all changed descriptors to old href on registry server
+            for mapping in service_states.descriptor_mapping:
+                _logger.info(f"Reset descriptor for submodel '{mapping.submodel_id}' to original href'")
+                # update 'slave' descriptor with old href on registry server
+                service_states.server_handler.sm_registry_client.submodel_registry.put_submodel_descriptor_by_id(
+                    mapping.submodel_id, mapping.master_descriptor
+                )
 
         _logger.info("Shutdown microservice complete")
 

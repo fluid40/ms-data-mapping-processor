@@ -1,6 +1,6 @@
 # 📝 Changelog
 
-## [0.9.3] - 2026-06-03
+## [0.9.4] - 2026-06-03
 
 * 🚀Improvement: Update packages
 
