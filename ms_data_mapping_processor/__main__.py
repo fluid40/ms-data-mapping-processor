@@ -75,9 +75,9 @@ async def lifespan(app: FastAPI):
     # start server
     try:
         config_file_name = os.getenv("CONFIG_FILE_NAME", "service_config.json")
-        config_file_path = Path(CONFIG_BASE_PATH) / config_file_name
+        config_file_path = (Path(CONFIG_BASE_PATH) / config_file_name).resolve()
 
-        _logger.debug("Loading configuration from %s", config_file_path.as_posix())
+        _logger.debug(f"Loading configuration from '{config_file_path.as_posix()}'")
 
         configuration = load_configuration_file(config_file_path)
         if configuration is None:

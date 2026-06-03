@@ -143,7 +143,7 @@ def _rewrite_registry_descriptor(submodel_id: str, server_handler: ServerHandler
     slave_protocol_info["href"] = slave_href
 
     # update descriptor with new href on registry server
-    _logger.debug(f"Update descriptor for submodel '{submodel_id}' with new href '{slave_href}' on registry server")
+    _logger.info(f"Update descriptor for submodel '{submodel_id}' with new href '{slave_href}' on registry server")
     server_handler.sm_registry_client.submodel_registry.put_submodel_descriptor_by_id(submodel_id, slave_descriptor)
 
     # save 'master' and 'slave' descriptor as a mapping for later use when submodels are fetched and descriptors need to be rewritten

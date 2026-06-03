@@ -72,7 +72,12 @@ def load_configuration_file(config_file: Path) -> ServiceConfiguration | None:
     _logger.debug(f"Configuration  file '{config_file}' found.")
 
     try:
-        return ServiceConfiguration.model_validate_json(config_string)
+        config = ServiceConfiguration.model_validate_json(config_string)
+        _logger.info(f"AAS ID: {config.aas_id}")
+        _logger.info(f"Polling Interval: {config.polling_interval}")
+        _logger.info(f"External URL: {config.external_url}:{config.external_port}")
+        return config
+
     except ValidationError as ve:
         _logger.error(f"Invalid BaSyx server connection file: {ve}")
         return None
@@ -132,6 +137,10 @@ class ServerConfigurationsHandler:
 
         try:
             self.aas_registry_configuration = ServerConfiguration.model_validate_json(json_files[0].read_text())
+            _logger.debug(
+                f"AAS Registry Configuration - Secret Var: {self.aas_registry_configuration.secret_var_name}, "
+                f"Server Config: {self.aas_registry_configuration.server_configuration}"
+            )
         except ValidationError as ve:
             _logger.error(f"Invalid Submodel registry connection file: {ve}")
             raise HTTPException(
@@ -165,6 +174,10 @@ class ServerConfigurationsHandler:
 
         try:
             self.sm_registry_configuration = ServerConfiguration.model_validate_json(json_files[0].read_text())
+            _logger.debug(
+                f"Submodel Registry Configuration - Secret Var: {self.sm_registry_configuration.secret_var_name}, "
+                f"Server Config: {self.sm_registry_configuration.server_configuration}"
+            )
         except ValidationError as ve:
             _logger.error(f"Invalid Submodel registry connection file: {ve}")
             raise HTTPException(
@@ -197,6 +210,10 @@ class ServerConfigurationsHandler:
             for json_file in json_files:
                 aas_server_configuration = ServerConfiguration.model_validate_json(json_file.read_text())
                 self.repo_server_configurations.append(aas_server_configuration)
+                _logger.debug(
+                    f"Repository Server Configuration - Secret Var: {aas_server_configuration.secret_var_name}, "
+                    f"Server Config: {aas_server_configuration.server_configuration}"
+                )
         except ValidationError as ve:
             _logger.error(f"Invalid AAS repository connection file '{json_file}': {ve}")
 
@@ -228,6 +245,10 @@ class ServerConfigurationsHandler:
 
         try:
             self.asset_connector_configuration = ServerConfiguration.model_validate_json(json_files[0].read_text())
+            _logger.debug(
+                f"Asset Connector Configuration - Secret Var: {self.asset_connector_configuration.secret_var_name}, "
+                f"Server Config: {self.asset_connector_configuration.server_configuration}"
+            )
         except ValidationError as ve:
             _logger.error(f"Invalid Asset Connector connection file: {ve}")
             raise HTTPException(

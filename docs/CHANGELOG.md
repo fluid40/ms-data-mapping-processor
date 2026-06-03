@@ -1,5 +1,9 @@
 # 📝 Changelog
 
+## [0.9.2] - 2026-06-03
+
+* 🚀Improvement: Update packages
+
 ## [0.9.1] - 2026-04-17
 
 * ✨Feat: Initial implementation
