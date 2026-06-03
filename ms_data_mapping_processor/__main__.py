@@ -172,8 +172,13 @@ app.add_middleware(
 if __name__ == "__main__" and os.getenv("RUN_SERVER", "1") == "1":
     logging_handler.initialize_logging(logging.INFO)
 
+    _logger.info("Starting microservice HTTP server")
+
     host = os.getenv("APP_HOST", "127.0.0.1")
     port = int(os.getenv("APP_PORT", "3088"))
+
+    _logger.info(f"Application host: {host}")
+    _logger.info(f"Application port: {port}")
 
     uvicorn.run(
         app,
