@@ -27,7 +27,7 @@ var NAVTREE =
   [ "Data Mapping Processor Documentation", "index.html", [
     [ "Microservice: Data Mapping Processor", "index.html", "index" ],
     [ "📝 Changelog", "md_docs_2CHANGELOG.html", [
-      [ "[0.9.3] - 2026-06-03", "md_docs_2CHANGELOG.html#autotoc_md1", null ],
+      [ "[0.9.4] - 2026-06-03", "md_docs_2CHANGELOG.html#autotoc_md1", null ],
       [ "[0.9.1] - 2026-04-17", "md_docs_2CHANGELOG.html#autotoc_md2", null ]
     ] ],
     [ "🛠️ Configuration Guide", "md_docs_2configuration.html", [
