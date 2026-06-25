@@ -1,5 +1,9 @@
 # 📝 Changelog
 
+## [0.9.6] - 2026-06-03
+
+* 🚀Improvement: Update packages
+
 ## [0.9.5] - 2026-06-03
 
 * 🚀Improvement: Update packages and improve logging
