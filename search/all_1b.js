@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['📋_20prerequisites_0',['📋 Prerequisites',['../index.html#autotoc_md30',1,'']]]
+  ['🐳_20docker_20setup_0',['🐳 Docker Setup',['../md_docs_2docker-setup.html',1,'']]]
 ];

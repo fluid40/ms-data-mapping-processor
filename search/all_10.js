@@ -1,13 +1,11 @@
 var searchData=
 [
-  ['mapping_20processor_0',['Microservice: Data Mapping Processor',['../index.html',1,'']]],
-  ['mapping_5fconfigurations_1',['mapping_configurations',['../classprocess__models_1_1ServiceStates.html#a6fc61b937f89548a15d3f02ac75cfeb5',1,'process_models::ServiceStates']]],
-  ['mapping_5fprocessor_5ferror_2',['MAPPING_PROCESSOR_ERROR',['../classconstants_1_1StatusCode.html#ac5566acdfd61085b20b389efe7ba2a0d',1,'constants::StatusCode']]],
-  ['master_5fdescriptor_3',['master_descriptor',['../classprocess__models_1_1DescriptorMapping.html#a667817db9bd43d5704f8e12ba16fc511',1,'process_models::DescriptorMapping']]],
-  ['message_4',['message',['../classresponse__body__models_1_1AssetConnectorResponseBody.html#afa80f054047336118a4cd7c9c24e1c6a',1,'response_body_models::AssetConnectorResponseBody']]],
-  ['microservice_3a_20data_20mapping_20processor_5',['Microservice: Data Mapping Processor',['../index.html',1,'']]],
-  ['ms_5fdata_5fmapping_5fprocessor_6',['ms_data_mapping_processor',['../namespacems__data__mapping__processor.html',1,'']]],
-  ['ms_5fdata_5fmapping_5fprocessor_3a_3a_5f_5fmain_5f_5f_7',['__main__',['../namespacems__data__mapping__processor_1_1____main____.html',1,'ms_data_mapping_processor']]],
-  ['ms_5fdata_5fmapping_5fprocessor_3a_3autilities_8',['utilities',['../namespacems__data__mapping__processor_1_1utilities.html',1,'ms_data_mapping_processor']]],
-  ['ms_5fdata_5fmapping_5fprocessor_3a_3autilities_3a_3alogging_5fhandler_9',['logging_handler',['../namespacems__data__mapping__processor_1_1utilities_1_1logging__handler.html',1,'ms_data_mapping_processor::utilities']]]
+  ['lifespan_0',['lifespan',['../namespacems__data__mapping__processor_1_1____main____.html#a997e1a71a70cdbe738b2c2d0650580e3',1,'ms_data_mapping_processor::__main__']]],
+  ['light_5fblue_1',['light_blue',['../classms__data__mapping__processor_1_1utilities_1_1logging__handler_1_1ColorCodes.html#a80912636a2316b0a65c703d0a39958d9',1,'ms_data_mapping_processor::utilities::logging_handler::ColorCodes']]],
+  ['load_5fconfiguration_5ffile_2',['load_configuration_file',['../namespaceconfiguration__models.html#a30985f09fe9e45100109c2655311d2c8',1,'configuration_models']]],
+  ['locally_3',['Option B: Build Image Locally',['../md_docs_2docker-setup.html#autotoc_md21',1,'']]],
+  ['log_5fconfig_4',['log_config',['../namespacems__data__mapping__processor_1_1____main____.html#a6d0a519ec403ae162f7fd05fba772762',1,'ms_data_mapping_processor::__main__']]],
+  ['log_5ffile_5fsuffix_5',['LOG_FILE_SUFFIX',['../namespacems__data__mapping__processor_1_1utilities_1_1logging__handler.html#a046479d41aabf6e0beab4a019a19f453',1,'ms_data_mapping_processor::utilities::logging_handler']]],
+  ['log_5ffolder_6',['LOG_FOLDER',['../namespacems__data__mapping__processor_1_1utilities_1_1logging__handler.html#a8c8518f864e58c627c34869d5d324d7e',1,'ms_data_mapping_processor::utilities::logging_handler']]],
+  ['logging_5fhandler_2epy_7',['logging_handler.py',['../logging__handler_8py.html',1,'']]]
 ];
