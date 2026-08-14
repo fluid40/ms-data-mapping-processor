@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['📝_20changelog_0',['📝 Changelog',['../md_docs_2CHANGELOG.html',1,'']]]
+  ['📚_20resources_0',['📚 Resources',['../index.html#autotoc_md34',1,'']]]
 ];

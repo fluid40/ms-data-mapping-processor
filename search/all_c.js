@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['features_0',['🚀 Features',['../index.html#autotoc_md29',1,'']]],
-  ['folder_20structure_1',['Required Folder Structure',['../md_docs_2configuration.html#autotoc_md6',1,'']]],
-  ['format_2',['format',['../classms__data__mapping__processor_1_1utilities_1_1logging__handler_1_1CustomConsoleFormatter.html#a4cd3491eb71aa4ad297b1bd59c4c2141',1,'ms_data_mapping_processor::utilities::logging_handler::CustomConsoleFormatter']]],
-  ['formats_3',['FORMATS',['../classms__data__mapping__processor_1_1utilities_1_1logging__handler_1_1CustomConsoleFormatter.html#a94225218127042560c3f1c3b19054a8c',1,'ms_data_mapping_processor::utilities::logging_handler::CustomConsoleFormatter']]]
+  ['environment_20variables_0',['Environment Variables',['../md_docs_2configuration.html#autotoc_md14',1,'']]],
+  ['errors_1',['Typical Startup Errors',['../md_docs_2configuration.html#autotoc_md17',1,'']]],
+  ['external_5fport_2',['external_port',['../classconfiguration__models_1_1ServiceConfiguration.html#a1d53f8b156f18c33ba180584f957b5eb',1,'configuration_models::ServiceConfiguration']]],
+  ['external_5furl_3',['external_url',['../classconfiguration__models_1_1ServiceConfiguration.html#a7c3c6e85649331bc48cb87bb6b272dac',1,'configuration_models::ServiceConfiguration']]]
 ];
