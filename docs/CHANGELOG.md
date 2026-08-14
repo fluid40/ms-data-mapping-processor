@@ -1,5 +1,9 @@
 # 📝 Changelog
 
+## [0.9.7] - 2026-08-14
+
+* 🧹Chore: Upgrade package versions in requirements.txt for improved compatibility and features.
+
 ## [0.9.6] - 2026-06-03
 
 * 🚀Improvement: Update packages

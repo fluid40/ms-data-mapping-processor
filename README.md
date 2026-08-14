@@ -10,11 +10,11 @@ This microservice transforms incoming asset data into structured AAS-compatible 
 
 **Table of Contents:**
 
-- [Microservice: Data Mapping Processor](#microservice-data-mapping-processor)
-  - [⚙️ Process](#️-process)
-  - [🚀 Features](#-features)
-  - [📋 Prerequisites](#-prerequisites)
-  - [📚 Resources](#-resources)
+* [Microservice: Data Mapping Processor](#microservice-data-mapping-processor)
+  + [⚙️ Process](#️-process)
+  + [🚀 Features](#-features)
+  + [📋 Prerequisites](#-prerequisites)
+  + [📚 Resources](#-resources)
 
 ---
 
@@ -47,7 +47,7 @@ In short, the service continuously transforms live connector data into AAS-compl
 
 Before running this service, make sure the following requirements are met:
 
-* Python 3.11 or newer
+* Python 3.13 or newer
 * Reachable AAS infrastructure services (AAS Registry, Submodel Registry, and at least one Repository server)
 * A reachable [Asset Connector](https://github.com/fluid40/ms-asset-connector) endpoint (for MQTT/OPC UA-backed data retrieval)
 * Valid JSON configuration files under the `configuration/` folder, including:

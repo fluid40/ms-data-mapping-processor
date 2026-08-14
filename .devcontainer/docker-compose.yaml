@@ -14,7 +14,7 @@ services:
       - bridge
 
   aas-registry:
-    image: eclipsebasyx/aas-registry-log-mongodb:2.0.0-SNAPSHOT
+    image: eclipsebasyx/aas-registry-log-mongodb:2.0.0-milestone-09
     container_name: aas-registry-ms
     environment:
       - SERVER_PORT=8080
@@ -30,7 +30,7 @@ services:
       - bridge
 
   sm-registry:
-    image: eclipsebasyx/submodel-registry-log-mongodb:2.0.0-SNAPSHOT
+    image: eclipsebasyx/submodel-registry-log-mongodb:2.0.0-milestone-09
     container_name: sm-registry-ms
     environment:
       - SERVER_PORT=8080
@@ -46,7 +46,7 @@ services:
       - bridge
 
   java_aas_server:
-    image: eclipsebasyx/aas-environment:2.0.0-SNAPSHOT
+    image: eclipsebasyx/aas-environment:2.0.0-milestone-09
     container_name: aas-server-ms
     ports:
       - "8075:8075"
